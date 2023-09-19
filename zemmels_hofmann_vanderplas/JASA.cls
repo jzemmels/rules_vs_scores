@@ -208,6 +208,7 @@ or MikTeX to have all the current files}\stop
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Load packages
 \usepackage{graphicx}% Include figure files
+\usepackage[title]{appendix}
 \usepackage{dcolumn}% Align table columns on decimal point
 \usepackage{bm}% bold math
 \usepackage{amsmath,amsfonts}% popular packages from the American Mathematical Society
@@ -218,7 +219,7 @@ or MikTeX to have all the current files}\stop
 
 \usepackage{longtable}
 \usepackage{booktabs}
-\usepackage[]{algorithm2e}
+\usepackage[ruled]{algorithm2e}
 
 \usepackage{soul}
 
@@ -831,7 +832,7 @@ minus 2pt}{6pt} {\noindent\boldmath\normalsize\normalfont
 
 
 %% default values
-\copyrightinfo{Acoustical Society of America.}
+\copyrightinfo{Statistical Analysis and Data Mining.}
 \copyrightyear{\the\year}
 
 %% need all this just to get line in below abstract!
@@ -903,7 +904,7 @@ minus 2pt}{6pt} {\noindent\boldmath\normalsize\normalfont
 \def\ps@titlepage{
 \def\@oddhead{\hfill}\let\@evenhead\@oddhead
 \def\@evenfoot{{\footnotesize\sf\ifodd\c@page\else\the\c@page\qquad\fi
-J. Acoust. Soc. Am.\ \ /\ \ \today
+Stat Anal Data Min: The ASA Data Sci Journal\ \ /\ \ \today
 \hfill
 \@shorttitle \ifodd\c@page\qquad\the\c@page\fi}}
 \let\@oddfoot\@evenfoot
@@ -1028,28 +1029,26 @@ J. Acoust. Soc. Am.\ \ /\ \ \today
 
 
 
-\def\appendixname{APPENDIX}
+%\def\appendixname{APPENDIX}
 
 
-\def\@appendixcntformat#1{\appendixname\ \csname
-thesection\endcsname: }%
+%\def\@appendixcntformat#1{\appendixname\ \csname thesection \endcsname: }%
 
-\def\appendixsection{\x@startsection {section}{1}{\z@ }{0.8cm \@plus
-1ex \@minus .2ex}{0.5cm}  {\sectionfont}}
+%\def\appendixsection{\x@startsection {section}{1}{\z@ }{0.8cm \@plus 1ex \@minus .2ex}{0.5cm}  {\sectionfont}}
 
 %% this is a fix for people with hyperref older than 2011, to prevent an error
-\expandafter\ifx\csname Hy@AlphNoErr\endcsname\relax
-\def\Hy@AlphNoErr#1{\ifnum \value {#1}>26 Alph\number \value{#1}
-\else  \ifnum \value {#1}<1 Alph\number \value {#1}
-\else \Alph {#1}\fi \fi}%
-\fi
+%\expandafter\ifx\csname Hy@AlphNoErr\endcsname\relax
+%\def\Hy@AlphNoErr#1{\ifnum \value {#1}>26 Alph\number \value{#1}
+%\else  \ifnum \value {#1}<1 Alph\number \value {#1}
+%\else \Alph {#1}\fi \fi}%
+%\fi
 
-\def\appendix{%
-\let\@sectioncntformat\@appendixcntformat
-\let\section\appendixsection
-\@ifundefined{chapter}{\gdef \theHsection {\Hy@AlphNoErr {section}}}
-{\gdef \theHchapter {\Hy@AlphNoErr {chapter}}}
-\xdef \Hy@chapapp {\Hy@appendixstring }\HyOrg@appendix}
+%\def\appendix{%
+%\let\@sectioncntformat\@appendixcntformat
+%\let\section\appendixsection
+%\@ifundefined{chapter}{\gdef \theHsection {\Hy@AlphNoErr {section}}}
+%{\gdef \theHchapter {\Hy@AlphNoErr {chapter}}}
+%\xdef \Hy@chapapp {\Hy@appendixstring }\HyOrg@appendix}
 
 
 \def\x@startsection#1#2#3#4#5#6{%

@@ -10,7 +10,7 @@
 %%%%%%% For Preprint
 %% For manuscript, 12pt, one column style
 
-\documentclass[preprint]{JASA}
+\documentclass[reprint]{JASA}
 
 %%%%% Preprint Options %%%%%
 %% The track changes option allows you to mark changes
@@ -132,7 +132,7 @@ Put your abstract here.
 \defcitealias{pcast2016}{PCAST (2016)}
 
 \hypertarget{introduction}{%
-\section{Introduction}\label{introduction}}
+\section{Background \& Introduction}\label{introduction}}
 
 A \emph{cartride case} is the part of firearm ammunition that houses the
 projectile and propulsive device. When a firearm is discharged and the
@@ -140,7 +140,13 @@ projectile travels down the barrel, the cartridge case moves in the
 opposite direction and slams against the back wall, the \emph{breech
 face}, of the firearm. Markings on the breech face are ``stamped'' into
 the surface of the cartridge case leaving so-called \emph{breech face
-impressions}.
+impressions}. In this paper, we introduce an automatic method for
+measuring the similarity between two cartridge cases based on their
+breech face impressions.
+
+\hypertarget{traditional-cartridge-case-comparison}{%
+\subsection{Traditional Cartridge Case
+Comparison}\label{traditional-cartridge-case-comparison}}
 
 In a traditional examination, forensic examiners use these impressions
 analogous to a fingerprint to determine whether two cartridge cases were
@@ -148,17 +154,17 @@ fired from the same firearm. First, two cartridge cases are collected -
 perhaps one is from a crime scene and the other is collected from a
 suspect's gun. An examiner places the two cartridge cases beneath a
 ``comparison microscope'' that merges the views of two compound
-microscopes into a single split view. The examiner assesses the ``degree
-of similarity'' between the markings on the cartridge cases and reaches
-either an \emph{identification}, meaning the cartridge cases were fired
-from the same firearm, an \emph{elimination}, meaning they were fired
-from different firearms, or an \emph{inconclusive}, meaning the evidence
-is insufficient to make an identification or elimination
-\citep{AFTE1992}.\footnote{The AFTE range of conclusions also permits
-  the examiner to decide that the evidence is \emph{unsuitable} for
-  examination, which can occur if evidence quality is poor; for example,
-  a fragment of a cartridge case is recovered rather than a full
-  cartridge case.}
+microscopes into a single split view \citep{Thompson2017}. The examiner
+assesses the ``degree of similarity'' between the markings on the
+cartridge cases and reaches either an \emph{identification}, meaning the
+cartridge cases were fired from the same firearm, an \emph{elimination},
+meaning they were fired from different firearms, or an
+\emph{inconclusive}, meaning the evidence is insufficient to make an
+identification or elimination \citep{AFTE1992}.\footnote{The AFTE range
+  of conclusions also permits the examiner to decide that the evidence
+  is \emph{unsuitable} for examination, which can occur if evidence
+  quality is poor; for example, a fragment of a cartridge case is
+  recovered rather than a full cartridge case.}
 
 Critics of traditional forensic examinations cite a lack of
 ``foundational validity'' underlying the procedures used by firearm and
@@ -167,29 +173,57 @@ particular, examiners rely largely on their subjective findings rather
 than on a well-defined procedure to measure similarity.
 \citetalias{pcast2016} pushed for ``developing and testing
 image-analysis algorithms'' to objectively measure the similarity
-between cartridge cases. Some recently proposed methods focus on
-measuring similarity using binary rules \textbf{{[}better way to say
-that?{]}} \textbf{{[}CITATIONS{]}}. These methods have the benefit of
-being interpretable, although recent work has demonstrated that they can
-be highly sensitive to parameter choice \citep{Zemmels2023}.
+between cartridge cases.
 
-In this paper, we propose a model-based procedure for measuring the
-similarity between two digital scans of cartridge cases. Our procedure
-measures similarity using a set of numerical features rather than binary
-rules. The result is a continuous score obtained by evaluating a trained
-statistical model, which adds nuance to the similarity measure past
-concluding that the cartridge cases did or did not originate from the
-same firearm.
+In this paper, we introduce a procedure to automatically compare digital
+scans of cartridge cases. Throughout this paper, we use scans, taken by
+us \textbf{{[}scientific data citation{]}}, of cartridge cases collected
+by \citet{Baldwin2014}. The cartridge case scans are available as part
+of the data repository at \textbf{{[}doi here{]} {[}citation{]}}. We
+also provide code to reproduce the results shared in this paper at
+\textbf{{[}github link here{]}}.
 
-In the following sections, we first review recently proposed algorithms
-to compare firearm evidence. We introduce our similarity scoring
-pipeline and share results of applying the pipeline to a data set of
-cartridge case scans available at \textbf{{[}data repo citation{]}}. We
-discuss how our proposed method builds upon previously proposed methods
-to obtain nuanced, informative, and robust similarity measures.
+\hypertarget{algorithmic-cartridge-case-comparisons}{%
+\subsection{Algorithmic Cartridge Case
+Comparisons}\label{algorithmic-cartridge-case-comparisons}}
 
-\hypertarget{previous-work}{%
-\subsection{Previous Work}\label{previous-work}}
+\hypertarget{cartridge-case-surface-scans}{%
+\subsubsection{Cartridge Case Surface
+Scans}\label{cartridge-case-surface-scans}}
+
+We captured digital representations of cartridge case surfaces using
+topographic scanning technology. The scanner measures the relative
+surface depth and stores these measurements in a 2D array called a
+\emph{surface matrix}. The left side of \autoref{fig:preProcessEffect}
+depicts a surface matrix representing the region at the base of a
+cartridge case surface called the \emph{primer}, which is the circular
+metal cap struck by the firing pin to initiate the firing process. The
+purple ring near the edges of the scan represent the boundary of the
+cartridge case primer while the darker orange ring near the center of
+the scan represents the deformation of metal caused by the contact with
+the firing pin.
+
+Of particular interest is the annular breech face impression region
+around the firing pin impression. We isolate this region by applying a
+series of manual and automatic pre-processing steps to the surface
+matrix, resulting in the scan on the right side of
+\autoref{fig:preProcessEffect}. The gray pixels in this image represent
+structurally missing values introduced during pre-processing. See
+\textbf{{[}scientific data citation{]}} for more information on the
+pre-processing procedure.
+
+\begin{figure}[htbp]
+\includegraphics[width=.5\textwidth]{figures/preProcessEffect} \caption{\label{fig:preProcessEffect} We apply a sequence of pre-processing functions to each scan. Each pre-processing step further emphasizes the breech face impressions in the scan.}\label{fig:unnamed-chunk-1}
+\end{figure}
+
+Two pre-processed cartridge cases are compared to measure the similarity
+of their breech face impressions. In the next section, we summarize a
+technique for comparing cartridge case scans called the \emph{Congruent
+Matching Cells} algorithm \citep{song_proposed_2013}.
+
+\hypertarget{congruent-matching-cells-algorithm}{%
+\subsubsection{Congruent Matching Cells
+Algorithm}\label{congruent-matching-cells-algorithm}}
 
 Recent proposals for automatic cartridge case scoring algorithms borrow
 from image processing and computer vision techniques. For example,
@@ -201,10 +235,6 @@ rotating one of the scans therefore allows for estimation of the optimal
 translation and rotation, together referred to as the
 \emph{registration}, between the two scans; simply choose the
 rotation/translation at which the CCF is maximized.
-\citet{hare_automatic_2016} used the CCF, among other features, to
-compare scans of bullets. \citet{tai_fully_2018} developed an
-open-source cartridge case comparison pipeline that compared cartridge
-case images using the CCF.
 
 \citet{song_proposed_2013} noted that two matching cartridge cases often
 share similar impressions in specific regions, so calculating the CCF
@@ -214,14 +244,18 @@ into a grid of ``cells'' and calculating the CCF between each cell and
 the other scan. If two cartridge cases are truly matching, then the
 maximum CCF value between each cell and the other scan, particularly the
 cells containing distinguishable breech face impressions, should be
-relatively large. Furthermore, the cells should ``agree'' on the
-registration at which the CCF is maximized. \citet{song_proposed_2013}
+relatively large.
+
+Furthermore, the cells should ``agree'' on the registration at which the
+CCF is maximized. \textbf{{[}Visually, this corresponds to xyz ---
+borrow figure from scientific data paper{]}} \citet{song_proposed_2013}
 outlined the ``Congruent Matching Cells'' algorithm to determine the
 number of cells that agree on a particular registration. A cell is
 classified as a Congruent Matching Cell (CMC) if its estimated
 registration is within some threshold of the median registration across
-all cells and its CCF value is above some threshold. A number of
-follow-up papers proposed alterations to the the original CMC method
+all cells and its CCF value is above some threshold (see
+\ref{appendixCMC} for more details). A number of follow-up papers
+proposed alterations to the the original CMC method
 \citep{tong_improved_2015, chen_convergence_2017}. \citet{cmcR}
 introduced an open-source implementation of the CMC method in the
 \texttt{cmcR} R package. As an alternative to defining Congruent
@@ -229,113 +263,32 @@ Matching Cells, \citet{zhang_convergence_2021} proposed using a
 clustering algorithm from \citet{Ester1996} to determine the number of
 cells in agreement on a specific registration.
 
-Currently, none of these papers have proposed rigorous procedure for
-comparing different cartridge case comparison algorithms. This includes
-selecting optimal parameters for a specific algorithm.
-\citet{Zemmels2023} proposed an optimization criterion to select
-parameters for the CMC algorithm. Analogously,
-\citet{hare_automatic_2016} developed a validation procedure to select
-parameters for a bullet comparison algorithm. In this work, we introduce
+The underlying CMC criteria are a set of binary rules; for example, a
+cell's associated registration either is or is not within a pre-defined
+threshold of the consensus-estimated registration. While interpretable,
+these threshold-based rules are quite sensitive to the choice of
+threshold as demonstrated in \citet{Zemmels2023}. We propose a more
+robust, model-based method that relies on numerical features to measure
+the strength of consensus rather than binary criteria. We also introduce
 a novel cross-validation procedure to learn and test optimal parameters
 for this cartridge case algorithm.
 
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
 
-We now discuss the methods behind the comparison algorithm. We divide
-the methods into three stages:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  \textbf{Pre-processing}: prepare cartridge case scans for comparison
-\item
-  \textbf{Comparing}: compare two cartridge cases and compute similarity
-  features
-\item
-  \textbf{Scoring}: measure the similarity between the two cartridge
-  cases using a trained classifier
-\end{enumerate}
-
-The following sections detail each of these stages. Throughout, we treat
-``surface matrix'' and ``scan'' synonymously.
-
-After taking a topographical scan of the cartridge case surfaces, we
-manually annotate the breech face impression region (shown in red). We
-automatically pre-process and compare the scans resulting in a
-similarity score, either a binary classification or class probability,
-derived from a classifier model. As we pointed out in Chapter 2, prosaic
-descriptions like the following are insufficient to reproduce an
-algorithm. We refer the reader to
-\url{https://github.com/jzemmels/jdssvSubmission/tree/main/supplementary-code}
-for the source code used to implement the method and derive the results
-presented.
-
-\hypertarget{pre-processing}{%
-\subsection{Pre-processing}\label{pre-processing}}
-
-We first use the open-source FiX3P web application
-(\url{https://github.com/talenfisher/fix3p}) to manually annotate the
-breech face impression region. The FiX3P software includes functionality
-to ``paint'' the surface of a cartridge case using a computer cursor and
-save the painted regions to a \emph{mask.} A mask is a 2D array of
-hexidecimal color values of the same dimension as its associated surface
-matrix. When initialized, every element of a mask is a shade of brown
-(\#cd7f32) by default. Any elements painted over by the user will be
-replaced with the user's selected color value.
-
-We pre-process the raw scans by applying a sequence of functions
-available in the R packages \texttt{x3ptools} \citep{x3ptools} and
-\texttt{cmcR} \citep{cmcR}. \autoref{fig:preProcessEffect} shows the
-effect that each function has on the scan surface values. Gray pixels in
-each plot represent missing values in the surface matrix. The
-\texttt{x3p\_delete} function removes values in the scan based on the
-associated mask. Next, the \texttt{preProcess\_removeTrend} function
-subtracts a fitted conditional median plane from the surface values to
-``level-out'' any global tilt in the scan. The
-\texttt{preProcess\_gaussFilter()} function applies a bandpass Gaussian
-filter with wavelength cutoff values 16 and 500 microns to remove
-small-scale noise and other large-scale structure, which better
-highlights the medium-scale breech face impressions. Finally, the
-\texttt{preProcess\_erode()} function applies the morphological
-operation of erosion with a circular structuring element of radius 12 on
-the edge of the non-missing surface values \citep{Haralick1987}. This
-has the effect of shaving off values on the interior and exterior edge
-of the surface, which are often extreme ``roll-off'' values that unduly
-affect the comparing stage if not removed. The final result is a
-cartridge case surface matrix with emphasized breech face impressions.
-
-\begin{figure}[htbp]
-\includegraphics[width=\textwidth]{figures/preProcessEffect} \caption{\label{fig:preProcessEffect} We apply a sequence of pre-processing functions to each scan. Each pre-processing step further emphasizes the breech face impressions in the scan.}\label{fig:unnamed-chunk-3}
-\end{figure}
-
-Next, we compute a set of similarity features for two pre-processed
-cartridge case scans.
-
-\hypertarget{comparing}{%
-\subsection{Comparing}\label{comparing}}
-
-In this section, we introduce a set of similarity features for two
-cartridge case scans. We calculate features at two scales: between two
-full scans and between individual cells. Analogous to how a forensic
-examiner uses a comparison microscope with different magnification
-levels, this allows us to assess the similarity between two scans at the
-macro and micro levels.
-
 \hypertarget{notational-conventions}{%
-\subsubsection{Notational Conventions}\label{notational-conventions}}
+\subsection{Notational Conventions}\label{notational-conventions}}
 
-First, we introduce notation that will be used to define the features.
-Let \(A\) and \(B\) denote two surfaces matrices that we wish to
-compare. For simplicity, we assume \(A,B \in \mathbb{R}^{k \times k}\)
-for a positive integer
+First, we establish notation that will be used to define the features.
+We introduce additional notation in subsequent sections as it becomes
+relevant. Let \(A\) and \(B\) denote two surfaces matrices that we wish
+to compare. For simplicity, we assume
+\(A,B \in \mathbb{R}^{k \times k}\) for a positive integer
 \(k\).\footnote{This assumption of equally-sized, square matrices is easily enforced by padding the matrices with additional missing values.
 Due to the presence of (structurally) missing values around the breech face impression region, additional padding does not interfere with the structure of the scan.}
 We use lowercase letters and subscripts to denote a particular value of
 a matrix: \(a_{ij}\) is the value in the \(i\)-th row and \(j\)-th
-column, indexed starting from the top-left corner, of matrix \(A\). In
-the following sections, we will use the two known-match cartridge cases
-in \autoref{fig:matchPair} as example matrices \(A\) and \(B\).
+column, indexed starting from the top-left corner, of matrix \(A\).
 
 To accommodate structurally missing values, we adapt standard matrix
 algebra by encoding the notion of ``missingness'' into the space of real
@@ -343,8 +296,8 @@ values as follows: if an element of either matrix \(A\) or \(B\) is
 missing, then any element-wise operation including this element is also
 missing. Standard matrix algebra holds for non-missing elements. For
 example, the addition operator is defined as: \begin{align*}
-A \oplus_{NA} B = (a_{ij} \oplus_{NA} b_{ij})_{1 \leq i,j \leq k} = 
-\begin{cases}
+A \oplus_{NA} B &= (a_{ij} \oplus_{NA} b_{ij})_{1 \leq i,j \leq k} \\
+&=  \begin{cases}
 a_{ij} + b_{ij} & \text{if both $a_{ij}$ and $b_{ij}$ are numbers} \\
 NA &\text{otherwise}
 \end{cases}
@@ -356,12 +309,14 @@ dealing with missing values is consistent with a setting of
 \texttt{na.rm\ =\ FALSE} in terms of calculations in R
 \citep{Rlanguage}.
 
-\begin{figure}[htbp]
-\includegraphics[width=\textwidth]{figures/matchPair} \caption{\label{fig:matchPair} A matching pair of processed cartridge case scans. We measure the similarity between these cartridge cases using the distinguishable breech face impressions on their surfaces.}\label{fig:unnamed-chunk-5}
-\end{figure}
+We call cartridge cases that originated from the same firearm
+``matches'' and those that originated from different firearms
+``non-matches.'' In the following sections, we use the two known-match
+cartridge cases in \autoref{fig:matchPair} as example matrices \(A\) and
+\(B\).
 
 \hypertarget{registration-estimation}{%
-\subsubsection{Registration Estimation}\label{registration-estimation}}
+\subsection{Registration Estimation}\label{registration-estimation}}
 
 A critical step in comparing \(A\) and \(B\) is to find a transformation
 of \(B\) such that it aligns best to \(A\) (or vice versa). In image
@@ -374,11 +329,11 @@ In our application, a registration is composed of a discrete translation
 by \((m,n) \in \mathbb{Z}^2\) and rotation by
 \(\theta \in [-180^\circ,180^\circ]\). To determine the optimal
 registration, we calculate the \emph{cross-correlation function} (CCF)
-between \(A\) and \(B\), which measures the similarity between \(A\) and
-\(B\) for every possible translation of \(B\), denoted \((A \star B)\).
-We estimate the registration by calculating the maximum CCF value across
-a range of rotations of matrix \(B\). Let \(B_\theta\) denote \(B\)
-rotated by an angle \(\theta \in [-180^\circ,180^\circ]\) and
+between \(A\) and \(B\), denoted \((A \star B)\), which measures the
+similarity between \(A\) and \(B\) for every possible translation of
+\(B\). We estimate the registration by calculating the maximum CCF value
+across a range of rotations of matrix \(B\). Let \(B_\theta\) denote
+\(B\) rotated by an angle \(\theta \in [-180^\circ,180^\circ]\) and
 \(b_{\theta_{mn}}\) the \(m,n\)-th element of \(B_\theta\). Then the
 estimated registration \((m^*,n^*,\theta^*)\) is:
 
@@ -393,6 +348,7 @@ matrix that is rotated as the ``target.'' The result is the estimated
 registration of the target matrix to the ``source'' matrix.
 
 \begin{algorithm}[htbp]
+\caption{Image Registration Procedure}\label{alg:registration}
 \KwData{Source matrix $A$, target matrix $B$, and rotation grid $\pmb{\Theta}$}
 \KwResult{Estimated registration of $B$ to $A$, $(m^*,n^*,\theta^*)$, and cross-correlation function maximum, $CCF_{\max}$}
 \For{$\theta \in \pmb{\Theta}$}{
@@ -403,20 +359,24 @@ Calculate translation $[m^*_\theta,n^*_\theta] = \arg \max_{m,n} (a \star b_{\th
 Calculate overall maximum correlation $CCF_{\max} = \max_{\theta} \{CCF_{\max,\theta} : \theta \in \pmb{\Theta}\}$\;
 Calculate rotation $\theta^* = \arg \max_{\theta} \{CCF_{\max,\theta} : \theta \in \pmb{\Theta}\}$\;
 \Return{Estimated rotation $\theta^*$, translation $m^* = m^*_{\theta^*}$ and $n^* = n^*_{\theta^*}$, and $CCF_{\max}$}
-\caption{Image Registration Procedure}
-\label{alg:registration}
 \end{algorithm}
 
-To accommodate missing values, we also compute the
-\emph{pairwise-complete correlation} using only the complete value
-pairs, meaning neither value is missing, between \(A\) and \(B\).
+\begin{figure}[htbp]
+\includegraphics[width=.5\textwidth]{figures/matchPair} \caption{\label{fig:matchPair} A matching pair of processed cartridge case scans. We measure the similarity between these cartridge cases using the distinguishable breech face impressions on their surfaces.}\label{fig:unnamed-chunk-3}
+\end{figure}
 
-\hypertarget{registration-based-features}{%
-\subsubsection{Registration-Based
-Features}\label{registration-based-features}}
+Note that the calculation of the CCF requires that all missing values,
+including structural missing values, are imputed in \(A\) and \(B\). We
+impute missing values in a scan with the average non-missing value in
+that scan. As a result of imputing a large number of missing values, we
+found in our experimentation the estimated registrations
+\((\theta^*, m^*, n^*)\) to be reliable but the value of \(CCF_{\max}\)
+to not be a reliable measure of similarity for scans. We discuss how we
+compute more reliable measures of similarity in
+\ref{featureCalculation}.
 
 \hypertarget{full-scan-registration}{%
-\paragraph{Full-Scan Registration}\label{full-scan-registration}}
+\subsubsection{Full-Scan Registration}\label{full-scan-registration}}
 
 We first estimate the registration between two full scans \(A\) and
 \(B\) using \autoref{alg:registration} with a rotation grid
@@ -427,25 +387,14 @@ similarity measure \(CCF_{\max}\). We also perform
 meaning the target scan \(A\) is aligned to source scan \(B\).
 
 To accommodate these two comparison directions, we introduce a new
-subscript \(d = A,B\), referring to the source scan in Image
-Registration Algorithm. Consequently, we obtain two sets of estimated
-registrations, \((m^*_d,n^*_d,\theta^*_d)\) and \(CCF_{\max,d}\), for
+subscript \(d = A,B\), referring to the source scan in
+\autoref{alg:registration}. Consequently, we obtain two sets of
+estimated registrations, \((m^*_d,n^*_d,\theta^*_d)\) and
+\(CCF_{\max,d}\), for
 \(d=A,B\).\footnote{In reality, the true aligning registrations in the two comparison directions are opposites of each other. However, because we compare discretely-indexed arrays using a nearest-neighbor interpolation scheme, the estimated registrations may differ slightly.}
-For \(d = A\), we then apply the registration transformation
-\((m^*_A,n^*_A,\theta^*_A)\) to \(B\) to obtain \(B^*\) and compute the
-pairwise-complete correlation, \(cor_{\text{full},A}\), between \(A\)
-and \(B^*\). We repeat this in the other comparison direction to obtain
-\(cor_{\text{full},B}\) and average the two:
-
-\[
-cor_{\text{full}} = \frac{1}{2}\left(cor_{A,\text{full}} + cor_{B,\text{full}}\right).
-\]
-
-We assume that the \textbf{full-scan pairwise-complete correlation} is
-large for truly matching cartridge cases.
 
 \hypertarget{cell-based-registration}{%
-\paragraph{Cell-Based Registration}\label{cell-based-registration}}
+\subsubsection{Cell-Based Registration}\label{cell-based-registration}}
 
 We next perform a cell-based comparison procedure, which begins with
 selecting one of the matrices, say \(A\), as the ``source'' matrix that
@@ -462,10 +411,8 @@ accommodate cells. Let \(A_{t}\) denote the \(t\)-th cell of matrix
 \(A\), \(t = 1,...,T_A\) where \(T_A\) is the total number of cells
 containing non-missing values in scan \(A\) (e.g., \(T_A = 43\) in
 \autoref{fig:cellGridExample}) and let \((a_t)_{ij}\) denote the
-\(i,j\)-th element of \(A_t\).
-
-The cell-based comparison procedure is outlined in
-\autoref{alg:cellComparison}.
+\(i,j\)-th element of \(A_t\). The cell-based comparison procedure is
+outlined in \autoref{alg:cellComparison}.
 
 \begin{algorithm}[H]
 \KwData{Source matrix $A$, target matrix $B^*$, grid size $R \times C$, and rotation grid $\pmb{\Theta}'_A$}
@@ -479,19 +426,21 @@ Calculate $CCF_{\max, A,t,\theta} = \max_{m,n} (a_t \star b^*_\theta)_{mn}$\;
 Calculate translation $[m^*_{A,t,\theta},n^*_{A,t,\theta}] = \arg \max_{m,n} (a_t \star b^*_\theta)_{mn}$
 }
 }
-\Return{$\pmb{F}_A = \{(m^*_{A,t,\theta},n^*_{A,t,\theta}, CCF_{\max,A,t,\theta}, \theta) : \theta \in \pmb{\Theta}'_A, t = 1,...,T_A\}$}
+\Return{$\pmb{F}_A = \{(\theta, m^*_{A,t,\theta},n^*_{A,t,\theta}, CCF_{\max,A,t,\theta}) : \theta \in \pmb{\Theta}'_A, t = 1,...,T_A\}$}
 \caption{Cell-Based Comparison Procedure}
 \label{alg:cellComparison}
 \end{algorithm}
 
-Rather than exclusively returning the registration that maximizes the
-overall CCF as in \autoref{alg:registration},
-\autoref{alg:cellComparison} returns the set \(\pmb{F}_A\) of
-translations and CCF values for each of the \(T_A\) cells and each
-rotation in \(\pmb{\Theta}'_A\).
+We can think of \autoref{alg:registration} as a specific case of
+\autoref{alg:cellComparison} where \(R = C = 1\), but we distinguish the
+algorithms in this paper based on the intended use of the result. Rather
+than exclusively returning the registration that maximizes the overall
+CCF as in \autoref{alg:registration}, \autoref{alg:cellComparison}
+returns the set \(\pmb{F}_A\) of translations and CCF values for each of
+the \(T_A\) cells and each rotation in \(\pmb{\Theta}'_A\).
 
 \begin{figure}[htbp]
-\includegraphics[width=\textwidth]{images/cellGridExample_nonMatch} \caption{\label{fig:cellGridExample} Estimated registrations of cells from a non-match pair of cartridge cases. A source scan (left) is separated into an $8 \times 8$ grid of cells. We exclude cells containing only missing values (visualized here as gray pixels). Each source cell is compared to a target scan (right) to estimate where it aligns best. We show a handful of cells at their estimated alignment in the target scan and magnify the surfaces captured by cell pairs 5, 1 and 7, 7. Although the cartridge case pair is non-matching, we note that there are similarities in the surface markings for these cell pairs.}\label{fig:unnamed-chunk-6}
+\includegraphics[width=.5\textwidth]{images/cellGridExample_nonMatch} \caption{\label{fig:cellGridExample} Estimated registrations of cells from a non-match pair of cartridge cases. A source scan (left) is separated into an $8 \times 8$ grid of cells. We exclude cells containing only missing values (visualized here as gray pixels). Each source cell is compared to a target scan (right) to estimate where it aligns best. We show a handful of cells at their estimated alignment in the target scan and magnify the surfaces captured by cell pairs 5, 1 and 7, 7. Although the cartridge case pair is non-matching, we note that there are similarities in the surface markings for these cell pairs.}\label{fig:unnamed-chunk-4}
 \end{figure}
 
 \autoref{fig:cellGridExample} shows the estimated registrations of cells
@@ -499,6 +448,56 @@ between two non-match cartridge cases. We magnify the surface values
 captured by cell pairs 5, 1 and 7, 7 and note the similarities in the
 surface values; for example, the dark purple region in the middle of the
 cell 7, 7 pair.
+
+Next, we introduce a set of similarity features for two cartridge case
+scans. We calculate features at two scales: between two full scans and
+between individual cells. Analogous to how a forensic examiner uses a
+comparison microscope with different magnification levels, this allows
+us to assess the similarity between two scans at the macro and micro
+levels.
+
+\hypertarget{featureCalculation}{%
+\subsection{Feature Calculation}\label{featureCalculation}}
+
+The result of the full scan and cell-based comparisons is a set of
+estimated registrations with associated \(CCF_{\max}\) values. We
+compute statistics on these results based on how we expect these
+registrations to behave for matching vs.~non-matching cartridge case
+pairs. Similar to the assumption made in the Congruent Matching Cells
+algorithm, we expect that cells will agree on a particular registration
+if the two cartridge cases truly match, suggesting that a measure of
+spread of the estimated registrations would be an informative statistic.
+Further, we would expect that the consensus-estimated registrations
+should be approximately opposite across the two comparison directions
+(i.e., registering \(A\) to \(B\) is the opposite of registering \(B\)
+to \(A\)).
+
+We first introduce a set of \emph{registration-based features} based on
+descriptive statistics of the full scan and cell-based registrations.
+Then, we discuss a set of \emph{density-based features} based on
+applying a density-based clustering algorithm to the cell registrations
+\(\pmb{F}_A\) and \(\pmb{F}_B\).
+
+\hypertarget{registration-based-features}{%
+\subsubsection{Registration-based
+Features}\label{registration-based-features}}
+
+For \(d = A\), we apply the registration transformation
+\((m^*_A,n^*_A,\theta^*_A)\) to \(B\) to obtain \(B^*\). Because the
+calculation of the \(CCF_{\max}\) requires imputing missing values in
+both the source and target scans, we found the \(CCF_{\max}\) values to
+not be a reliable measure of similarity for two cartridge cases.
+Instead, we compute the \emph{pairwise-complete correlation}, \(cor\),
+which is equivalent to the Pearson correlation between the overlapping,
+non-missing elements of \(A\) and \(B^*\).
+
+We compute the pairwise-complete correlation between \(A\) and \(B^*\),
+resulting in \(cor_{\text{full},A}\). We repeat this in the other
+comparison direction to obtain \(cor_{\text{full},B}\) and average the
+two:
+\(cor_{\text{full}} = \frac{1}{2}\left(cor_{A,\text{full}} + cor_{B,\text{full}}\right)\).
+We assume that the \textbf{full-scan pairwise-complete correlation},
+\(cor_{\text{full}}\), is large for truly matching cartridge cases.
 
 Just as with the whole-scan registration, we calculate the
 pairwise-complete correlation between each cell \(A_t\) and a matrix
@@ -595,7 +594,7 @@ scan \(A\) is used as source and \(B^*\) as target rotated by
 translations with the roles of \(A\) and \(B^*\) reversed for
 \(\theta = -3^\circ\). We see distinctive clusters, the black points, in
 both plots among many noisy, gray points. The task is to isolate the
-clusters amongst such noise.
+clusters among such noise.
 
 We use the Density-Based Spatial Clustering of Applications with Noise
 (DBSCAN) algorithm proposed by \citet{Ester1996} to identify clusters.
@@ -604,20 +603,28 @@ Compared to other clustering algorithms such as k-means
 expected clusters. Instead, the algorithm forms clusters if the number
 of points within an \(\epsilon > 0\) distance of a point exceeds some
 pre-defined threshold, \(minPts > 1\). If a point does not belong to a
-cluster, then DBSCAN labels that point as ``noise.'' In
-\autoref{fig:dbscanScatterplot}, we use DBSCAN with \(\epsilon = 5\) and
-\(minPts = 5\) to identify clusters of size 14 and 13, respectively,
-visualized as black points. These cluster sizes suggest that the scans
-match. Additionally, the mean cluster centers are approximately
-opposites of each other:
-\((\hat{m}_A,\hat{n}_A,\hat{\theta}_A) \approx (16.9, -16.7, 3^\circ)\)
+cluster, then DBSCAN labels that point as ``noise.''
+
+In \autoref{fig:dbscanScatterplot}, we use a \(4 \times 4\) grid of
+cells to which we apply DBSCAN with \(\epsilon = 3\) and \(minPts = 3\).
+The resulting clusters for the two comparison directions are 7 and 9
+cells, respectively, visualized in \autoref{fig:dbscanScatterplot} as
+black points. This indicates that about half of the cells in the
+\(4 \times 4\) grid agree on a registration in both comparison
+directions. Additionally, the mean cluster centers are approximately
+close to 0:
+\((\hat{m}_A,\hat{n}_A,\hat{\theta}_A) \approx (0.29, 0.57, 0^\circ)\)
 when \(A\) is used as source compared to
-\((\hat{m}_B,\hat{n}_B,\hat{\theta}_B) \approx (-16.2, 16.8, -3^\circ)\)
-when \(B^*\) is used as source. This provides further evidence of a
-match.
+\((\hat{m}_B,\hat{n}_B,\hat{\theta}_B) \approx (-0.67, 0, 0^\circ)\)
+when \(B^*\) is used as source. If \(A\) and \(B\) were truly matching
+and the full scan registration from \autoref{alg:registration}
+successfully aligned the two scans, then we wouldn't expect the cells to
+move much in their respective registrations, which is illustrated in
+this example. For non-matching scans, we wouldn't expect the cell
+registrations to agree only by coincidence.
 
 \begin{figure}[htbp]
-\includegraphics[width=.8\textwidth]{figures/dbscanScatterplot} \caption{\label{fig:dbscanScatterplot} Cluster assignments based on the Density Based Spatial Clustering with Applications to Noise (DBSCAN) algorithm for estimated translations in two comparison directions. Using scan $A$ as source results in a cluster of size 14 (left) compared to 13 when scan $B^*$ is used as source (right). Noting the reversed axes in the right plot, we see that the clusters are located approximately opposite of each other. Points are jittered for visibility.}\label{fig:unnamed-chunk-9}
+\includegraphics[width=.5\textwidth]{figures/dbscanScatterplot} \caption{\label{fig:dbscanScatterplot} Cluster assignments based on the Density Based Spatial Clustering with Applications to Noise (DBSCAN) algorithm for estimated translations in two comparison directions. Using scan $A$ as source results in a cluster of size 14 (left) compared to 13 when scan $B^*$ is used as source (right). Noting the reversed axes in the right plot, we see that the clusters are located approximately opposite of each other. Points are jittered for visibility.}\label{fig:unnamed-chunk-7}
 \end{figure}
 
 To calculate the density-based features, we first use a 2D kernel
@@ -656,10 +663,10 @@ values of \(C\) if no cluster is identified. Missing \(C\) values are
 imputed using the median non-missing value when fitting classifiers, so
 the missingness information is retained in \(C_0\).
 
-For truly matching cartridge case pairs, we expect \(C\) to be large,
-\(C_0\) to be 1, and \(\Delta_\theta, \Delta_{\text{trans}}\) to be
-small relative to non-matching pairs. We obtain four density-based
-features summarized in \autoref{tab:dbscanFeatures}.
+For truly matching cartridge case pairs, we expect \(C\) to be large and
+\(\Delta_\theta, \Delta_{\text{trans}}\) to be small relative to
+non-matching pairs and for \(C_0\) to be equal to 1. We obtain four
+density-based features summarized in \autoref{tab:dbscanFeatures}.
 
 \begin{table}[htbp]
 \centering
@@ -672,6 +679,11 @@ $\Delta_{\text{trans}}$ & Root sum of squares of the density-estimated translati
 \caption{Four similarity features based on the density-based clustering procedure.}
 \label{tab:dbscanFeatures}
 \end{table}
+
+\hypertarget{model-fitting}{%
+\subsection{Model Fitting}\label{model-fitting}}
+
+Cross-validation procedure
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -691,13 +703,20 @@ University of California Irvine, University of Virginia, West Virginia
 University, University of Pennsylvania, Swarthmore College and
 University of Nebraska, Lincoln.
 
-Additionally, we would like to thank the technicians and staff at the
-Roy J. Carver High Resolution Microscopy Facility for collecting the
-topographical scans used in this paper.
+We would like to thank the technicians and staff at the Roy J. Carver
+High Resolution Microscopy Facility for collecting the topographical
+scans used in this paper.
 
 \end{acknowledgments}
 
-\appendix
+\begin{appendices}
+
+\section{Congruent Matching Cells Algorithm Criteria} \label{appendixCMC}
+
+This section will provide a more thorough definition of the classification criteria used in the Congruent Matching Cells algorithm as proposed in \citet{song_proposed_2013}.
+This section assumes that the reader is familiar with the notation and algorithms, \autoref{alg:registration} and \autoref{alg:cellComparison}, introduced in \ref{methods}.
+
+\end{appendices}
 
 % -------------------------------------------------------------------------------------------------------------------
 %   Appendix  (optional)
