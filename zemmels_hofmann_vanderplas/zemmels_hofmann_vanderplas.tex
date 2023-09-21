@@ -561,23 +561,6 @@ where
 We expect \(s_{\theta^*}, s_{m^*},s_{n^*}\) to be small for truly
 matching cartridge case pairs relative to non-matching pairs.
 
-From the full-scan and cell-based registration procedures, we obtain six
-features summarized in \autoref{tab:registrationFeatures}.
-
-\begin{table}[htbp]
-\centering
-\begin{tabular}{p{.11\linewidth} p{.7\linewidth}}
-$cor_{\text{full}}$ & Full-scan pairwise-complete correlation \\
-$\overline{cor}_{\text{cell}}$ & Average cell-based pairwise-complete correlation \\
-$s_{cor}$ & Standard deviation of the cell-based pairwise-complete correlations \\
-$s_{m^*}$ & Standard deviation of the cell-based vertical translations (in microns) \\
-$s_{n^*}$ & Standard deviation of the cell-based horizontal translations (in microns) \\
-$s_{\theta^*}$ & Standard deviation of the cell-based rotations (degrees)
-\end{tabular}
-\caption{Six similarity features based on registering full scans and cells.}
-\label{tab:registrationFeatures}
-\end{table}
-
 \hypertarget{density-based-features}{%
 \subsubsection{Density-Based Features}\label{density-based-features}}
 
@@ -585,8 +568,7 @@ We wish to identify when multiple cells agree on, or cluster around, a
 particular registration value. However, pursuant with the notion that
 only certain regions of matching cartridge cases contain distinctive
 markings, it is unreasonable to assume and empirically rare that
-\textbf{all} cells agree on a single registration. In fact, it is common
-for many cells to disagree on a registration. For example, the left
+\textbf{all} cells agree on a single registration. For example, the left
 scatterplot in \autoref{fig:dbscanScatterplot} shows the per-cell
 estimated translations \([m^*_{A,t,\theta}, n^*_{A,t,\theta}]\) when
 scan \(A\) is used as source and \(B^*\) as target rotated by
@@ -615,7 +597,7 @@ directions. Additionally, the mean cluster centers are approximately
 close to 0:
 \((\hat{m}_A,\hat{n}_A,\hat{\theta}_A) \approx (0.29, 0.57, 0^\circ)\)
 when \(A\) is used as source compared to
-\((\hat{m}_B,\hat{n}_B,\hat{\theta}_B) \approx (-0.67, 0, 0^\circ)\)
+\((\hat{m}_B,\hat{n}_B,\hat{\theta}_B) \approx (-0.67, 0.00, 0^\circ)\)
 when \(B^*\) is used as source. If \(A\) and \(B\) were truly matching
 and the full scan registration from \autoref{alg:registration}
 successfully aligned the two scans, then we wouldn't expect the cells to
@@ -624,7 +606,7 @@ this example. For non-matching scans, we wouldn't expect the cell
 registrations to agree only by coincidence.
 
 \begin{figure}[htbp]
-\includegraphics[width=.5\textwidth]{figures/dbscanScatterplot} \caption{\label{fig:dbscanScatterplot} Cluster assignments based on the Density Based Spatial Clustering with Applications to Noise (DBSCAN) algorithm for estimated translations in two comparison directions. Using scan $A$ as source results in a cluster of size 14 (left) compared to 13 when scan $B^*$ is used as source (right). Noting the reversed axes in the right plot, we see that the clusters are located approximately opposite of each other. Points are jittered for visibility.}\label{fig:unnamed-chunk-7}
+\includegraphics[width=.5\textwidth]{figures/dbscanScatterplot} \caption{\label{fig:dbscanScatterplot} Cluster assignments based on the Density Based Spatial Clustering with Applications to Noise (DBSCAN) algorithm for estimated translations in two comparison directions. Clustered points are shown as black while "noise" points are gray. We see that the clusters are both centered near the origin, indicating no further transformation is needed. Points are jittered for visibility.}\label{fig:unnamed-chunk-7}
 \end{figure}
 
 To calculate the density-based features, we first use a 2D kernel
@@ -665,25 +647,98 @@ the missingness information is retained in \(C_0\).
 
 For truly matching cartridge case pairs, we expect \(C\) to be large and
 \(\Delta_\theta, \Delta_{\text{trans}}\) to be small relative to
-non-matching pairs and for \(C_0\) to be equal to 1. We obtain four
-density-based features summarized in \autoref{tab:dbscanFeatures}.
+non-matching pairs and for \(C_0\) to be equal to 1.
+
+In summary, there are 10 total features, 6 registration-based and 4
+density-based, that we calculate for each cartridge case pair. We list
+the 10 features in \autoref{tab:allFeatures}. In the next section, we
+discuss how we use these features in a model-based approach to obtain
+similarity scores.
 
 \begin{table}[htbp]
 \centering
-\begin{tabular}{p{.11\linewidth} p{.7\linewidth}}
-$C$ & Average DBSCAN cluster size \\
-$C_0$ & DBSCAN cluster indicator \\
-$\Delta_\theta$ & Absolute sum of the density-estimated rotations (degrees) \\
-$\Delta_{\text{trans}}$ & Root sum of squares of the density-estimated translations (in microns)
+\begin{tabular}{p{.4\linewidth}p{.59\linewidth}}
+$cor_{\text{full}} \in [0,1]$ & Full-scan pairwise-complete correlation \\
+$\overline{cor}_{\text{cell}} \in [0,1]$ & Average cell-based pairwise-complete correlation \\
+$s_{cor} \in [0,\infty)$ & Standard deviation of the cell-based pairwise-complete correlations \\
+$s_{m^*} \in [0,\infty)$ & Standard deviation of the cell-based vertical translations (in microns) \\
+$s_{n^*} \in [0,\infty)$ & Standard deviation of the cell-based horizontal translations (in microns) \\
+$s_{\theta^*} \in [0,\infty)$ & Standard deviation of the cell-based rotations (degrees) \\
+$C \in \{minPts,...,T_S\}$ & Average DBSCAN cluster size (for scan $S$)\\
+$C_0 \in \{0,1\}$ & DBSCAN cluster indicator \\
+$\Delta_\theta \in [0^\circ,180^\circ)$ & Absolute sum of the density-estimated rotations (degrees) \\
+$\Delta_{\text{trans}} \in [0,\infty)$ & Root sum of squares of the density-estimated translations (in microns)
 \end{tabular}
-\caption{Four similarity features based on the density-based clustering procedure.}
-\label{tab:dbscanFeatures}
+\caption{Ten features we compute for each cartridge case pair.}
+\label{tab:allFeatures}
 \end{table}
 
 \hypertarget{model-fitting}{%
 \subsection{Model Fitting}\label{model-fitting}}
 
-Cross-validation procedure
+We use a data set of 510 cartridge cases scanned from 25 firearms. We
+randomly split the data into 10 firearms for training and 15 firearms
+for testing. This resulted in a training data set of 210 cartridge
+cases, \(\binom{210}{2} = 21,945\) pairwise comparisons, and a testing
+set of 300 cartridge cases, \(\binom{300}{2} = 44,850\) pairwise
+comparisons. Because we consider every pairwise comparison between these
+scans, there is a relatively large class imbalance between matches and
+non-matches in these data sets. Specifically, non-matching comparisons
+make up 19,756 of the 21,945 (90.0\%) training comparisons and 41,769 of
+the 44,850 (93.1\%) testing comparisons.
+
+We use 10-fold cross-validation repeated thrice \citep{caret} to train
+two binary classifiers based on a logistic regression and a random
+forest \citep{breiman, randomForest}. These models predict the
+probability that a pair of cartridge cases match (the \emph{match
+probability}). Then, the model classifies the pair as a match or
+non-match depending on whether the match probability exceeds a set
+threshold.
+
+Models trained to maximize accuracy on imbalanced data often exhibit a
+``preference'' for classifying new observations as the majority class
+\citep{Fernndez2018}. To address this imbalance, we explore three
+possible subsampling techniques: \emph{upsampling} the number of match
+comparisons to equal the number of non-match comparisons,
+\emph{downsampling} the number of non-match comparisons to equal the
+number of match comparisons, and performing no subsampling.
+
+An optimization criterion commonly used for imbalanced data is to select
+the model that maximizes the area under the Receiver Operating
+Characteristic (ROC) curve, which measures the performance of a model
+under different threshold values \citep{James2013}. The model that
+maximizes this area, commonly abbreviated AUC, is one that performs best
+under a variety of threshold values relative to the other models - this
+consistency is a desired trait. Using the ROC curve, we choose the match
+probability threshold that balances the true negative and true positive
+(equivalently, the false positive and false negative) rates on the
+training data.
+
+We optimize the models by performing a grid search across the following
+parameters:
+
+\begin{itemize}
+\item
+  DBSCAN parameters \(\epsilon \in \{3,4,...,15\}\) and
+  \(minPts \in \{3,4,...,10\}\),
+\item
+  Subsampling technique: downsampling, upsamplng, and no subsampling,
+\item
+  For the random forest, the ``mtry'' variable, which controls the
+  number of candidate variables a decision tree has available at each
+  split \citep{breiman}, and
+\item
+  Match probability, \(p \in [0,1]\)
+\end{itemize}
+
+Once we have a trained model, we use it to predict the match probability
+and classify a new cartridge case pair. We use this match probability as
+a similarity score where larger values correspond with more similar
+cartridge cases. We compute this score for the pairwise comparisons in
+the test data as a means of comparing the generalizability of the
+various models. The following section details the results of this
+cross-validation training/testing procedure. We refer the reader to
+\textbf{{[}link{]}} for the source code used to derive these results.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.14)  18 SEP 2023 19:27
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.20)  20 SEP 2023 18:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -648,95 +648,116 @@ Underfull \hbox (badness 4366) in paragraph at lines 523--526
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 571--572
-[]|\TU/lmr/m/n/9 Average cell-based pairwise-complete
- []
-
-
-Underfull \hbox (badness 7558) in paragraph at lines 572--573
-[]|\TU/lmr/m/n/9 Standard deviation of the cell-based
- []
-
 File: figures/dbscanScatterplot.png Graphic file (type bmp)
 <figures/dbscanScatterplot.png>
 
-Overfull \hbox (9.0pt too wide) in paragraph at lines 627--627
+Overfull \hbox (9.0pt too wide) in paragraph at lines 609--609
  [][] 
  []
 
 [5]
-
-LaTeX Warning: A float is stuck (cannot be placed) on input line 646.
-
-
-LaTeX Warning: A float is stuck (cannot be placed) on input line 646.
-
-
-Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
-
-
-Underfull \hbox (badness 2735) in paragraph at lines 677--678
-[]|\TU/lmr/m/n/9 Root sum of squares of the density-
+Underfull \hbox (badness 4673) in paragraph at lines 652--657
+[]\TU/lmr/m/n/10 In summary, there are 10 total features, 6
  []
 
 
-Underfull \hbox (badness 1354) in paragraph at lines 698--705
+Underfull \hbox (badness 10000) in paragraph at lines 661--662
+[]|\TU/lmr/m/n/9 Full-scan pairwise-complete
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 662--663
+[]|\TU/lmr/m/n/9 Average cell-based pairwise-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 669--670
+[]|\TU/lmr/m/n/9 Absolute sum of the density-
+ []
+
+
+Overfull \hbox (5.5376pt too wide) in paragraph at lines 660--672
+ []$[]$ 
+ []
+
+
+Underfull \hbox (badness 2269) in paragraph at lines 690--697
+[]\TU/lmr/m/n/10 We use 10-fold cross-validation repeated thrice
+ []
+
+
+Underfull \hbox (badness 3965) in paragraph at lines 722--725
+ []\TU/lmr/m/n/10 DBSCAN parameters $\OML/cmm/m/it/10 ^^O \OMS/cmsy/m/n/10 2 f\OT1/cmr/m/n/10 3\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 4\OML/cmm/m/it/10 ; :::; \OT1/cmr/m/n/10 15\OMS/cmsy/m/n/10 g$ \TU/lmr/m/n/10 and
+ []
+
+[6]
+Underfull \hbox (badness 1354) in paragraph at lines 753--760
 []\TU/lmr/m/n/10 This work was partially funded by the Center
  []
 
 
-Underfull \hbox (badness 6758) in paragraph at lines 698--705
+Underfull \hbox (badness 6758) in paragraph at lines 753--760
 \TU/lmr/m/n/10 for Statistics and Applications in Forensic Evi-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 698--705
+Underfull \hbox (badness 10000) in paragraph at lines 753--760
 \TU/lmr/m/n/10 dence (CSAFE) through Cooperative Agreement
  []
 
 
-Underfull \hbox (badness 3724) in paragraph at lines 698--705
+Underfull \hbox (badness 3724) in paragraph at lines 753--760
 \TU/lmr/m/n/10 Mellon University, Duke University, University of
  []
 
 
-Underfull \hbox (badness 2057) in paragraph at lines 698--705
+Underfull \hbox (badness 2057) in paragraph at lines 753--760
 \TU/lmr/m/n/10 University, University of Pennsylvania, Swarthmore
  []
 
-(./zemmels_hofmann_vanderplas.bbl (./zemmels_hofmann_vanderplas.ent) [6]
-Underfull \hbox (badness 1881) in paragraph at lines 33--34
+(./zemmels_hofmann_vanderplas.bbl (./zemmels_hofmann_vanderplas.ent)
+Underfull \hbox (badness 3919) in paragraph at lines 33--34
+ \TU/lmr/m/it/8 An Introduction to Statistical Learning: with Applica-
+ []
+
+
+Underfull \hbox (badness 1102) in paragraph at lines 33--34
+ \TU/lmr/m/it/8 tions in R \TU/lmr/m/n/8 (Springer), [][]$[][][][][] [] [] [] [][][][][][][] [] [][][][][][][][] [] [][][] [] [][][] []
+ []
+
+
+Underfull \hbox (badness 1881) in paragraph at lines 48--49
  \TU/lmr/m/n/8 of feature-comparison methods,” [][]$[][][][][] [] [] [] [][][][][][][][][][][][][][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--34
+Underfull \hbox (badness 10000) in paragraph at lines 48--49
  [][][][][][][][] [] [][][] [] [][][][][] [] [][][][][][][] [] [][][][][] [] [][][][][][][][][][] [] [][][][] [] [][][][][] []
  []
 
-
-Underfull \hbox (badness 1424) in paragraph at lines 51--52
+[7]
+Underfull \hbox (badness 1424) in paragraph at lines 66--67
  \TU/lmr/m/n/8 Filliben, J. J., Ma, L., Rhee, H. G., Zheng, A., Song,
  []
 
 
-Underfull \hbox (badness 2521) in paragraph at lines 51--52
+Underfull \hbox (badness 2521) in paragraph at lines 66--67
  \TU/lmr/m/n/8 J. F., Riley, M., Foreman, C. D., and Ballou, S. M.
  []
 
-) [7] (./zemmels_hofmann_vanderplas.aux)
+) [8] (./zemmels_hofmann_vanderplas.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-29>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 15256 strings out of 477590
- 240513 string characters out of 5817186
- 1974432 words of memory out of 5000000
- 36168 multiletter control sequences out of 15000+600000
+ 15272 strings out of 477590
+ 240797 string characters out of 5817186
+ 1973416 words of memory out of 5000000
+ 36184 multiletter control sequences out of 15000+600000
  571441 words of font info for 112 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 85i,19n,93p,820b,522s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 85i,19n,93p,820b,534s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on zemmels_hofmann_vanderplas.pdf (7 pages).
+Output written on zemmels_hofmann_vanderplas.pdf (8 pages).
