@@ -714,7 +714,7 @@ To numerically compare the three classifiers, we compute the area under the ROC 
 The AUC for logistic regression and random forest classifiers are much higher than the AUC of the CMC method classifier.
 Each model has a different score threshold that yields the equal error rate, which we visualize as points along the three ROC curves in \autoref{fig:rocPlot}.
 We use these thresholds to compute both the training and test classification results summarized below.
-We see that the All ACES, logistic regression model has the lowest equal error rate out of the four models with the All ACES, random forest model a close second.
+We see that the random forest classifier has the lowest equal error rate out of the three models with the logistic regression classifier a close second.
 
 ```{r rocPlot,echo=FALSE,fig.env="figure*",fig.align='center',fig.cap='ROC curves for logistic regression (LR), random forest (RF), and Congruent Matching Cells classifiers. On the left, we zoom into the top-left corner of the ROC curve plot to better distinguish between the LR and RF curves. We see that the two statistical model classifiers have higher area under the curve (AUC) and lower equal error rate (EER) values than the CMC method. We also show the score classification cutoffs (Thresh.) used for each of the four models to achieve the equal error rate values.',fig.pos="htbp",out.width="\\textwidth"}
 knitr::include_graphics("images/resultsPlots/rocPlot.png")
@@ -727,7 +727,7 @@ We distinguish between the training and testing results using gray and black poi
 The conclusions drawn from \autoref{fig:trainTestAccuracy} are intended to primarily be qualitative and comparative across models.
 \autoref{tab:trainDataResults} and \autoref{tab:testDataResults} in the Appendix provide a numerical summary of these results.
 
-```{r,echo=FALSE,fig.env="figure*",fig.align='center',fig.cap="\\label{fig:trainTestAccuracy} We summarize classification accuracy, true negative, and true positive rates for both the training and testing results, represented as gray and black points/lines respectively, for four binary classifiers. Our primary interest is the test data results, but visualizing the training data results allows us to assess the generalizability of the classifiers after training. The first row summarizes results from a decision rule based on whether the DBSCAN algorithm identifies a cluster among a comparison's cell-wise registrations. The second row summarizes results from a classifier based on the Congruent Matching Cells method. The third and fourth rows show results from training/testing classifiers based on a random forest (RF) and logistic regression (LR).",fig.pos="htbp",out.width="\\textwidth"}
+```{r,echo=FALSE,fig.env="figure*",fig.align='center',fig.cap="\\label{fig:trainTestAccuracy} We summarize classification accuracy, true negative, and true positive rates for both the training and testing results, represented as gray and black points/lines respectively, for four binary classifiers. Our primary interest is the test data results, but visualizing the training data results allows us to assess the generalizability of the classifiers after training. The first row summarizes results from a decision rule classifier based on whether the DBSCAN algorithm identifies a cluster among a comparison's cell-wise registrations. The second row summarizes results from a classifier based on the Congruent Matching Cells method. The third and fourth rows show results from training/testing classifiers based on a random forest (RF) and logistic regression (LR).",fig.pos="htbp",out.width="\\textwidth"}
 knitr::include_graphics("images/resultsPlots/classifResultsPlt_trainTest.png")
 ```
 
@@ -798,6 +798,84 @@ knitr::include_graphics("images/resultsPlots/varImpPlt.png")
 
 # Discussion {#discussion}
 
+
+## Comparison to CMC Methodology
+
+We use a $C_0$-based classifier as a baseline because it is analogous to the classification rule proposed in @zhang_convergence_2021.
+Similarly, the cell-based registration features are based on the the same cell-based comparison procedure used in @song_proposed_2013 and summarized in cell-based comparison.
+Together, we consider $C_0$ and the registration-based features a fusion of previously proposed cartridge case similarity scoring algorithms.
+This is why we fit separate classifiers based on these features for the training and testing results shown in \autoref{fig:testProbs-byFirearm}.
+\autoref{tab:previousWorkComparison} summarizes the similarities between the ACES algorithm and the algorithms proposed in @zhang_convergence_2021 and @song_proposed_2013.
+Another key difference between ACES and both of the previous algorithms is the training/testing procedure used to optimize and validate model parameters.
+
+```{=tex}
+\begin{table}[htbp]
+\centering
+\begin{tabular}{p{.18\linewidth} p{.23\linewidth} p{.23\linewidth} p{.23\linewidth}}
+Original Paper & Similarities to ACES & Original Use & ACES Use \\
+\hline
+\citet{song_proposed_2013} & Use \autoref{alg:cellComparison} to estimate cell-based registrations & Call cells Congruent Matching Cells if their registrations are close to a reference value. Classify a cartridge case pair as a match if the CMC count is at least 6. & Compute six summative features based on full-scan and cell registrations. Use features in a classifier model. \\
+\hline
+\citet{zhang_convergence_2021} & Use DBSCAN algorithm to identify cells that reach a consensus registration & Classify a cartridge case pair as a match if a DBSCAN cluster is identified. & Compute four numerical features based on DBSCAN clusters across both comparison directions. Use features in a classifier model.
+\end{tabular}
+\caption{Comparison of the ACES algorithm to previous work. Although ACES shares similarities to previously-proposed algorithms, it includes additional nuance by computing features across both comparison directions and using these features in a classifier model.}
+\label{tab:previousWorkComparison}
+\end{table}
+```
+
+\autoref{tab:classifMethodComparison} shows the test classification error rates of the Congruent Matching Cells (CMC) algorithm proposed in @song_proposed_2013, the $C_0$-based classifier like the one proposed in @zhang_convergence_2021, and the two ACES logistic regression models selected to balance the true negative and true positive rates and maximize the classification accuracy.
+We obtained the CMC results by applying the implementation available in the `cmcR` R package [@cmcR] on the same test data set used in the Results section.
+We used the optimization procedure described in @Zemmels2023 to select CMC parameters.
+The $C_0$-based error rates are the same as those shown in the first row of \autoref{fig:trainTestAccuracy}.
+The ACES logistic regression models perform better than the other classifiers on this test data set, most notably when compared to the CMC method in identifying matching cartridge case pairs.
+Interestingly, the $C_0$-based classifier has a lower false negative error rate compared to the All ACES-trained, maximum accuracy logistic regression model, although it has a much higher false positive rate.
+
+```{=tex}
+\begin{table}[htbp]
+\centering
+\begin{tabular}{l r r r}
+Classification Method & Error (\%) & False Positive (\%) & False Negative (\%) \\
+\hline
+CMC method &  3.9 & 2.3 & 25.8 \\
+Only $C_0$ feature & 9.5 & 9.6 & 9.2 \\
+ACES LR & 2.3 & 2.2 & 3.8 \\
+\end{tabular}
+\caption{Testing classification error, false positive, and false negative rates for four types of classifier models. The CMC method results are derived from the implementation available in the \texttt{cmcR} R package \citet{cmcR}. The "Only $C_0$ feature" classifier is analogous to the classification rule used in \citet{zhang_convergence_2021}. The last row shows results from the Logistic Regression classifier trained on the all 19 ACES features.}
+\label{tab:classifMethodComparison}
+\end{table}
+```
+
+
+Both the registration and density-based features aim to measure similarities between two cartridge case surfaces.
+These features embody the notion assumed in the CMC methodology that matching cartridge cases should have similar markings, so their cell-based correlations should be large and estimated registrations should agree.
+However, \autoref{fig:cellGridExample} demonstrates that even non-matching cartridge case pairs may share similar markings.
+We are bound to find similarities if that is all we look for, so it is worthwhile to also consider dissimilarities.
+The visual diagnostic features accomplish this by partitioning scans into similar and different regions.
+The similarities vs. differences ratio and labeled neighborhood size features measure how extreme the differences are between two scans while the differences correlation features determine whether there are similarities among the different regions.
+
+This direct comparison of the surface values aligns with the Theory of Identification which says that an examination should involve the comparison of the "relative height or depth, width, curvature and spatial relationship" of cartridge case impressions [@AFTE1992].
+Comparison algorithms like ACES will inevitably be used to augment the opinion of a forensic examiner, who may need to present algorithmic results to judges or juries as part of their expert testimony.
+As such, it is important that forensic examiners are able to interpret and explain the results of a comparison algorithm.
+The visual diagnostic features are useful for explaining the behavior of the algorithm in a manner that aligns with more traditional identification theory.
+
+## Model Selection Considerations
+
+Our intention in fitting the logistic regression and random forest classification models using different feature sets is to explore each model's strengths and weaknesses.
+A critical step in putting the ACES algorithm into practice will be to settle on a single model.
+Pragmatically, it seems reasonable to choose the model with the highest estimated accuracy on available test data.
+However, we noted that models trained by this optimization criterion on imbalanced data tend to over-classify the majority class.
+This is the case for the CMC method results we summarized in \autoref{tab:classifMethodComparison}, but is also true for ACES statistical models trained to maximize overall accuracy.
+For example, if we were to shift the similarity score classification threshold for the All ACES logistic regression model to maximize the overall accuracy on the training data, the resulting score threshold is 0.54 with test accuracy, true negative, and true positive rates of 99.4%, 99.9%, and 92.4%.
+Given the large true negative rate, we might favor this model from an ethical perspective since misclassifying a truly non-matching cartridge case pair may incriminate an innocent individual.
+However, the true positive rate is considerably lower than the "balanced" results summarized in \autoref{fig:trainTestAccuracy}.
+Further exploration of different optimization criteria is warranted.
+
+Another aspect to consider when choosing a model is interpretability and explainability.
+If an algorithm is applied in forensic casework, then evidentiary conclusions derived from the algorithm's output will inevitably be presented to a non-expert judge or jury.
+More interpretable models are easier to understand, and therefore should be preferred.
+The classification behavior of the logistic regression and classification tree models are arguably easier to explain than the random forest model.
+For example, the logistic regression model parameters can be understood in terms of the estimated increase in odds of a match.
+Paired with its comparable performance to the random forest, we propose the logistic regression model with all 19 ACES features as the preferred model that balances interpretability with accuracy.
 
 
 # Conclusion {#conclusion}
