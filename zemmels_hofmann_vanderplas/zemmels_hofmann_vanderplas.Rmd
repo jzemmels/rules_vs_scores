@@ -692,7 +692,7 @@ Once we have a trained model, we use it to predict the match probability and cla
 We use this match probability as a similarity score where larger values correspond with more similar cartridge cases.
 We compute this score for the pairwise comparisons in the test data as a means of comparing the generalizability of the various models.
 The following section details the results of this cross-validation training/testing procedure.
-We refer the reader to **[link]** for the source code used to derive these results.
+We refer the reader to <https://github.com/jzemmels/rules_vs_scores> for the source code used to derive these results.
 
 # Results {#results}
 
@@ -726,9 +726,9 @@ knitr::include_graphics("images/resultsPlots/rocPlot.png")
 Three of the four classifiers are associated with the equal error rate points shown in \autoref{fig:rocPlot}.
 The fourth classifier is based on a simple, binary decision rule that classifies a pair as a match if the DBSCAN algorithm identifies a cluster in the cell-wise estimated registrations (in *both* comparison directions) and as a non-match otherwise.
 This is analogous to the decision rule proposed in @zhang_convergence_2021.
-We optimized this "Cluster Indicator" classifier by selecting DBSCAN parameters that balanced the train true positive and true negative rates, resulting in parameters $\epsilon = \#$ and $minPts = \#$.
+We optimized this "Cluster Indicator" classifier by selecting DBSCAN parameters that balanced the train true positive and true negative rates, resulting in parameters $\epsilon = 15$ and $minPts = 8$.
 We refer to the Cluster Ind. and CMC-based classifiers as "rule-based" because the fundamental similarity scoring and decision-making mechanisms are based on one or more binary rules.
-Comparatively, the "model-based" logistic regression and random forest classifiers rely on a learned mapping of the numerical features summarized in \autoref{tab:registrationFeatures} to a continuous class probability that is ultimately used to discriminate between match and non-match comparisons.
+Comparatively, the "model-based" logistic regression and random forest classifiers rely on a learned mapping of the numerical features summarized in \autoref{tab:allFeatures} to a continuous class probability that is ultimately used to discriminate between match and non-match comparisons.
 
 In \autoref{fig:trainTestAccuracy}, we distinguish between the training and testing results using gray and black points/line segments, respectively, which allows us to assess the generalizability of the various models to new comparisons.
 The conclusions drawn from \autoref{fig:trainTestAccuracy} are intended to primarily be qualitative and comparative across models.
@@ -746,8 +746,8 @@ Despite lower true positive rates, the overall accuracy between the training and
 
 In general, we see that the logistic regression (LR) and random forest (RF) models perform comparable to each other in accuracy, true negative, and true positive rates.
 If we compare the "$C_0$ + Registration"-trained models in the second vs. the "All ACES"-trained models in the third row, we see that the addition of the other ACES features leads to improved test true negative and true positive rates (and consequently overall accuracy) with the most noticeable gains observed in the true positive rate.
-Across all four models, the random forest classifier has the largest overall test accuracy and true negative rates of \#\#\#% and \#\#\#%, respectively.
-The logistic regression classifier has the largest overall true positive rate of \#\#\#%, although this difference does not overcome the class imbalance between the match and non-match comparisons (see \autoref{tab:testDataResults} for more details).
+Across the four models, the random forest classifier has the largest overall test accuracy and true negative rates of 98.9\% and 99.3\%, respectively.
+The logistic regression classifier has the largest overall true positive rate of 94.4\% (see \autoref{tab:testDataResults} for more details).
 
 ## Similarity Score Investigation
 
@@ -799,7 +799,13 @@ We use Cluster Indicator classifier as a baseline because it is analogous to the
 Similarly, the cell-based registration features are based on the the same cell-based comparison procedure used in @song_proposed_2013 and summarized in cell-based comparison.
 Together, we consider these classifiers as representing previously proposed cartridge case similarity scoring algorithms.
 \autoref{tab:previousWorkComparison} summarizes the similarities between our method and the algorithms proposed in @zhang_convergence_2021 and @song_proposed_2013.
-Another key difference between the "rule-based" and "model-based" methods is the training/testing procedure we used to optimize and validate model parameters.
+In our view, a defining characteristic of the previously proposed methods is they make classifications based on a set of binary decisions; for example, a cell is classified as a Congruent Matching Cell if its estimated registration is "close to" a reference value where "closeness" means being within some pre-defined, manually chosen threshold of the reference [@song_proposed_2013].
+The Cluster Indicator classifier used in @zhang_convergence_2021 uses the DBSCAN algorithm to compare cell registrations *to each other* rather than to a reference, but makes classifications based on the simple rule of whether a cluster is identified among the cell registrations.
+In contrast, our approach uses similar information to these previously proposed, "rule-based" methods, but in a more nuanced manner.
+We compute continuous summary statistics of the cell registrations rather than comparing them to a reference value as in the CMC method.
+We use the size of the DBSCAN clusters as a feature rather than simply considering whether a cluster exists as in the Cluster Indicator classifier.
+Our approach also combines the cell registration summaries and DBSCAN cluster features across both comparison directions, which protects against the rare, but not impossible, chance of a non-match pair that happens to appear similar in one, but not both, comparison directions.
+Finally, the procedure by which we fit a statistical classifier model using a training feature set has a number of benefits: (1) model parameters are automatically determined based on optimizing a set of criteria, (2) it's easier to understand the relationship between input features and the output score/classification by considering variable importance or weights, and (3) the continuous, model-based similarity score provides additional nuance than a discrete or binary similarity score.
 
 ```{=tex}
 \begin{table*}[htbp]
@@ -816,31 +822,10 @@ Original Paper & Similarities to ACES & Original Use & ACES Use \\
 \end{table*}
 ```
 
-<!-- \autoref{tab:classifMethodComparison} shows the test classification error rates of the Congruent Matching Cells (CMC) algorithm proposed in @song_proposed_2013, the $C_0$-based classifier like the one proposed in @zhang_convergence_2021, and the logistic regression model selected to balance the true negative and true positive rates and maximize the classification accuracy. -->
-<!-- We obtained the CMC results by applying the implementation available in the `cmcR` R package [@cmcR] on the same test data set used in the Results section. -->
-<!-- We used the optimization procedure described in @Zemmels2023 to select CMC parameters. -->
-<!-- The $C_0$-based error rates are the same as those shown in the first row of \autoref{fig:trainTestAccuracy}. -->
-<!-- The ACES logistic regression models perform better than the other classifiers on this test data set, most notably when compared to the CMC method in identifying matching cartridge case pairs. -->
-<!-- Interestingly, the $C_0$-based classifier has a lower false negative error rate compared to the All ACES-trained, maximum accuracy logistic regression model, although it has a much higher false positive rate. -->
 
-<!-- ```{=tex} -->
-<!-- \begin{table}[htbp] -->
-<!-- \centering -->
-<!-- \begin{tabular}{l r r r} -->
-<!-- Classification Method & Error (\%) & False Positive (\%) & False Negative (\%) \\ -->
-<!-- \hline -->
-<!-- CMC method &  3.9 & 2.3 & 25.8 \\ -->
-<!-- Only $C_0$ feature & 9.5 & 9.6 & 9.2 \\ -->
-<!-- ACES LR & 2.3 & 2.2 & 3.8 \\ -->
-<!-- \end{tabular} -->
-<!-- \caption{Testing classification error, false positive, and false negative rates for four types of classifier models. The CMC method results are derived from the implementation available in the \texttt{cmcR} R package \citet{cmcR}. The "Only $C_0$ feature" classifier is analogous to the classification rule used in \citet{zhang_convergence_2021}. The last row shows results from the Logistic Regression classifier trained on the all 19 ACES features.} -->
-<!-- \label{tab:classifMethodComparison} -->
-<!-- \end{table} -->
-<!-- ``` -->
 
 **Comparison to decision tree model**
 
-**More clear delineation between rule-based and model-based approaches**
 
 ## Model Selection Considerations
 
@@ -849,7 +834,7 @@ A critical step in putting cartridge case comparison algorithms into practice wi
 Pragmatically, it seems reasonable to choose the model with the highest estimated accuracy on available test data.
 However, we noted that models trained by this optimization criterion on imbalanced data tend to over-classify the majority class.
 This is the case for all four classifiers summarized in \autoref{fig:trainTestAccuracy} despite our efforts to use supsampling and optimization approaches to mitigate this effect.
-If we were instead shift the similarity score classification threshold for the logistic regression model to maximize the overall accuracy on the training data, the resulting score threshold is \#\#\# with test accuracy, true negative, and true positive rates of \#\#\#%, \#\#\#%, and \#\#\#%, respectively.
+If we were instead shift the similarity score classification threshold for the logistic regression model to maximize the overall accuracy on the training data, the resulting score threshold is 0.903 with test accuracy, true negative, and true positive rates of 99.2\%, 99.8\%, and 90.0%, respectively.
 Given the large true negative rate, we might favor this model from an ethical perspective since misclassifying a truly non-matching cartridge case pair may incriminate an innocent individual.
 However, the true positive rate is considerably lower than the "balanced" results summarized in \autoref{fig:trainTestAccuracy}.
 Further exploration of different optimization criteria is warranted.
@@ -864,10 +849,23 @@ Paired with its comparable performance to the random forest, we propose the logi
 
 # Conclusion {#conclusion}
 
+In this paper, we introduced a novel algorithm to measure the similarity between two fired cartridge cases based on their breech face impressions.
+In particular, we defined a set of 9 similarity features and used these features to train and test classifier models.
+We validated our algorithm on a set of 510 cartridge cases.
+Compared to predominant algorithms like the CMC algorithm described in @song_proposed_2013, the ACES logistic regression model achieves higher test accuracy rates while having more balanced true positive and true negative rates.
+We propose a logistic regression classifier trained on the ACES feature set as a new benchmark to which future scoring methods are compared.
 
+Before our method can be put into practice, we must devise new stress-tests, using new ammunition and firearm combinations, to assess its robustness.
+There is also an opportunity to optimize additional parameters, such as the number of cells used in cell-based comparison or parameters used in pre-processing, to measure their effects on final results.
+A variety of factors, such as make/model and wear of the evidence or the algorithm parameters used, affect the discriminative power of the 19 features defined in this paper.
+We view the current version of the ACES algorithm as more a foundation for future improvements than a final solution.
+We expect the feature set to evolve over time;  for discriminatory features to supplant less informative features.
+Given the gravity of the application, we stress interpretability as a guiding principle for future feature engineering and model selection.
+A misunderstood feature or result may lead a lay judge or juror to an incorrect conclusion.
+Additionally, we urge future researchers to use a train/test procedure similar to the one outlined in this paper to validate proposed methods.
 
-
-
+We developed the [scored](https://jzemmels.github.io/scored/) R package as an open-source software companion to this paper.
+The code and data used in this paper are available at <https://github.com/jzemmels/rules_vs_scores>.
 
 <!-- You can add your acknowledgements here (optional). -->
 ::: {.acknowledgments data-latex=""}

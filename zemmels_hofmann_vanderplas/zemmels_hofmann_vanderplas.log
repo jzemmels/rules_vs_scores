@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.20)  26 SEP 2023 16:12
-=======
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.28)  2 OCT 2023 09:59
->>>>>>> e212ba87b767191950cc9b3480b9f8d800c0b08f
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.20)  9 OCT 2023 15:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -293,49 +289,55 @@ File: tc-xetex.def 2019/01/04 v2.2 Clipping driver for xetex
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
 Package: ifoddpage 2022/10/18 v1.2 Conditionals for odd/even page detection
 \c@checkoddpage=\count288
+) (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/varwidth/varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box72
+\sift@deathcycles=\count289
+\@vwid@loff=\dimen170
+\@vwid@roff=\dimen171
 )) (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
 \LTleft=\skip57
 \LTright=\skip58
 \LTpre=\skip59
 \LTpost=\skip60
-\LTchunksize=\count289
-\LTcapwidth=\dimen170
-\LT@head=\box72
-\LT@firsthead=\box73
-\LT@foot=\box74
-\LT@lastfoot=\box75
-\LT@gbox=\box76
-\LT@cols=\count290
-\LT@rows=\count291
-\c@LT@tables=\count292
-\c@LT@chunks=\count293
+\LTchunksize=\count290
+\LTcapwidth=\dimen172
+\LT@head=\box73
+\LT@firsthead=\box74
+\LT@foot=\box75
+\LT@lastfoot=\box76
+\LT@gbox=\box77
+\LT@cols=\count291
+\LT@rows=\count292
+\c@LT@tables=\count293
+\c@LT@chunks=\count294
 \LT@p@ftn=\toks30
 ) (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen171
-\lightrulewidth=\dimen172
-\cmidrulewidth=\dimen173
-\belowrulesep=\dimen174
-\belowbottomsep=\dimen175
-\aboverulesep=\dimen176
-\abovetopsep=\dimen177
-\cmidrulesep=\dimen178
-\cmidrulekern=\dimen179
-\defaultaddspace=\dimen180
-\@cmidla=\count294
-\@cmidlb=\count295
-\@aboverulesep=\dimen181
-\@belowrulesep=\dimen182
-\@thisruleclass=\count296
-\@lastruleclass=\count297
-\@thisrulewidth=\dimen183
+\heavyrulewidth=\dimen173
+\lightrulewidth=\dimen174
+\cmidrulewidth=\dimen175
+\belowrulesep=\dimen176
+\belowbottomsep=\dimen177
+\aboverulesep=\dimen178
+\abovetopsep=\dimen179
+\cmidrulesep=\dimen180
+\cmidrulekern=\dimen181
+\defaultaddspace=\dimen182
+\@cmidla=\count295
+\@cmidlb=\count296
+\@aboverulesep=\dimen183
+\@belowrulesep=\dimen184
+\@thisruleclass=\count297
+\@lastruleclass=\count298
+\@thisrulewidth=\dimen185
 ) (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
 Invalid UTF-8 byte or sequence at line 284 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 299 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 550 replaced by U+FFFD.
 Package: algorithm2e 2017/07/18 v5.2 algorithms environments
-\c@AlgoLine=\count298
+\c@AlgoLine=\count299
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
 )
@@ -353,33 +355,33 @@ Package: relsize 2013/03/29 ver 4.1
 \skiplength=\skip67
 \algomargin=\skip68
 \skipalgocfslide=\skip69
-\algowidth=\dimen184
-\inoutsize=\dimen185
-\inoutindent=\dimen186
-\interspacetitleruled=\dimen187
-\interspacealgoruled=\dimen188
-\interspacetitleboxruled=\dimen189
+\algowidth=\dimen186
+\inoutsize=\dimen187
+\inoutindent=\dimen188
+\interspacetitleruled=\dimen189
+\interspacealgoruled=\dimen190
+\interspacetitleboxruled=\dimen191
 \algocf@ruledwidth=\skip70
-\algocf@inoutbox=\box77
-\algocf@inputbox=\box78
+\algocf@inoutbox=\box78
+\algocf@inputbox=\box79
 \AlCapSkip=\skip71
 \AlCapHSkip=\skip72
 \algoskipindent=\skip73
-\algocf@nlbox=\box79
-\algocf@hangingbox=\box80
-\algocf@untilbox=\box81
+\algocf@nlbox=\box80
+\algocf@hangingbox=\box81
+\algocf@untilbox=\box82
 \algocf@skipuntil=\skip74
-\algocf@capbox=\box82
+\algocf@capbox=\box83
 \algocf@lcaptionbox=\skip75
 \algoheightruledefault=\skip76
 \algoheightrule=\skip77
 \algotitleheightruledefault=\skip78
 \algotitleheightrule=\skip79
-\c@algocfline=\count299
-\c@algocfproc=\count300
-\c@algocf=\count301
-\algocf@algoframe=\box83
-\algocf@algobox=\box84
+\c@algocfline=\count300
+\c@algocfproc=\count301
+\c@algocf=\count302
+\algocf@algoframe=\box84
+\algocf@algobox=\box85
 ) (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/soul/soul.sty
 Package: soul 2023-06-14 v3.1 Permit use of UTF-8 characters in soul (HO)
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/soul/soul-ori.sty
@@ -390,20 +392,20 @@ Package: soul-ori 2023-06-14 v3.1 letterspacing/underlining (mf)
 \SOUL@cmds=\toks34
 \SOUL@buffer=\toks35
 \SOUL@token=\toks36
-\SOUL@syllgoal=\dimen190
-\SOUL@syllwidth=\dimen191
-\SOUL@charkern=\dimen192
-\SOUL@hyphkern=\dimen193
-\SOUL@dimen=\dimen194
-\SOUL@dimeni=\dimen195
-\SOUL@minus=\count302
-\SOUL@comma=\count303
-\SOUL@apo=\count304
-\SOUL@grave=\count305
+\SOUL@syllgoal=\dimen192
+\SOUL@syllwidth=\dimen193
+\SOUL@charkern=\dimen194
+\SOUL@hyphkern=\dimen195
+\SOUL@dimen=\dimen196
+\SOUL@dimeni=\dimen197
+\SOUL@minus=\count303
+\SOUL@comma=\count304
+\SOUL@apo=\count305
+\SOUL@grave=\count306
 \SOUL@spaceskip=\skip80
-\SOUL@ttwidth=\dimen196
-\SOUL@uldp=\dimen197
-\SOUL@ulht=\dimen198
+\SOUL@ttwidth=\dimen198
+\SOUL@uldp=\dimen199
+\SOUL@ulht=\dimen256
 ) (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 ) (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds.sty
@@ -454,17 +456,17 @@ Package nameref Warning: The definition of \label has changed!
 (nameref)                Check your packages! 
 (nameref)                Replacing it with the kernel definition on input line 145.
 
-\c@section@level=\count306
+\c@section@level=\count307
 )
-\@linkdim=\dimen199
-\Hy@linkcounter=\count307
-\Hy@pagecounter=\count308
+\@linkdim=\dimen257
+\Hy@linkcounter=\count308
+\Hy@pagecounter=\count309
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2023-07-08 v7.01b Hyperref: PDFDocEncoding definition (HO)
 ) (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count309
+\Hy@SavedSpaceFactor=\count310
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2023-07-08 v7.01b Hyperref: PDF Unicode definition (HO)
 )
@@ -480,17 +482,17 @@ Package hyperref Info: Backreferencing OFF on input line 4187.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks OFF on input line 4440.
 LaTeX Info: Redefining \href on input line 4683.
-\c@Hy@tempcnt=\count310
+\c@Hy@tempcnt=\count311
 LaTeX Info: Redefining \url on input line 4772.
-\XeTeXLinkMargin=\dimen256
+\XeTeXLinkMargin=\dimen258
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
-\Fld@menulength=\count311
-\Field@Width=\dimen257
-\Fld@charsize=\dimen258
+\Fld@menulength=\count312
+\Field@Width=\dimen259
+\Fld@charsize=\dimen260
 Package hyperref Info: Hyper figures OFF on input line 6051.
 Package hyperref Info: Link nesting OFF on input line 6056.
 Package hyperref Info: Hyper index ON on input line 6059.
@@ -502,9 +504,9 @@ Package hyperref Info: PDF/A mode OFF on input line 6081.
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count312
-\c@Item=\count313
-\c@Hfootnote=\count314
+\Hy@abspage=\count313
+\c@Item=\count314
+\c@Hfootnote=\count315
 )
 Package hyperref Info: Driver (autodetected): hxetex.
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hxetex.def
@@ -512,11 +514,11 @@ File: hxetex.def 2023-07-08 v7.01b Hyperref driver for XeTeX
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
-\pdfm@box=\box85
-\c@Hy@AnnotLevel=\count315
-\HyField@AnnotCount=\count316
-\Fld@listcount=\count317
-\c@bookmark@seq@number=\count318
+\pdfm@box=\box86
+\c@Hy@AnnotLevel=\count316
+\HyField@AnnotCount=\count317
+\Fld@listcount=\count318
+\c@bookmark@seq@number=\count319
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty
@@ -529,97 +531,97 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 )
 \Hy@SectionHShift=\skip81
 )
-\refchangenumber=\count319
-\listchangenum=\count320
-\c@figureplusone=\count321
-\currentpage=\count322
-\c@multimedia=\count323
+\refchangenumber=\count320
+\listchangenum=\count321
+\c@figureplusone=\count322
+\currentpage=\count323
+\c@multimedia=\count324
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/endnotes/endnotes.sty
 Invalid UTF-8 byte or sequence at line 118 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 118 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 121 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 121 replaced by U+FFFD.
 Package: endnotes 2020-01-02 endnotes package
-\c@endnote=\count324
-\endnotesep=\dimen259
+\c@endnote=\count325
+\endnotesep=\dimen261
 \@enotes=\write4
 )
-\reprintcolumnwidth=\dimen260
+\reprintcolumnwidth=\dimen262
 )
-Class revtex4-1 Info: Unrecognized array package. Please update this document class! (Proceeding with fingers crossed.) on input line 58.
-Class revtex4-1 Info: Patching unrecognized longtable package. (Proceeding with fingers crossed) on input line 58.
-Class revtex4-1 Info: cite was not loaded (OK!) on input line 58.
-Class revtex4-1 Info: mcite was not loaded (OK!) on input line 58.
-Class revtex4-1 Info: multicol was not loaded (OK!) on input line 58.
+Class revtex4-1 Info: Unrecognized array package. Please update this document class! (Proceeding with fingers crossed.) on input line 57.
+Class revtex4-1 Info: Patching unrecognized longtable package. (Proceeding with fingers crossed) on input line 57.
+Class revtex4-1 Info: cite was not loaded (OK!) on input line 57.
+Class revtex4-1 Info: mcite was not loaded (OK!) on input line 57.
+Class revtex4-1 Info: multicol was not loaded (OK!) on input line 57.
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
 File: l3backend-xetex.def 2023-04-19 L3 backend support: XeTeX
-\g__graphics_track_int=\count325
-\l__pdf_internal_box=\box86
-\g__pdf_backend_object_int=\count326
-\g__pdf_backend_annotation_int=\count327
-\g__pdf_backend_link_int=\count328
+\g__graphics_track_int=\count326
+\l__pdf_internal_box=\box87
+\g__pdf_backend_object_int=\count327
+\g__pdf_backend_annotation_int=\count328
+\g__pdf_backend_link_int=\count329
 ) (./zemmels_hofmann_vanderplas.aux)
 \openout1 = `zemmels_hofmann_vanderplas.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 58.
-LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 58.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 57.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 57.
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-Package hyperref Info: Link coloring ON on input line 58.
-Class revtex4-1 Info: Overriding lineo.sty, restoring output routine, on input line 58.
-Class revtex4-1 Info: Line numbering not turned on yet on input line 58.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+Package hyperref Info: Link coloring ON on input line 57.
+Class revtex4-1 Info: Overriding lineo.sty, restoring output routine, on input line 57.
+Class revtex4-1 Info: Line numbering not turned on yet on input line 57.
 \openout3 = `zemmels_hofmann_vanderplasNotes.bib'.
 
-Class revtex4-1 Info: Overriding \@LN@LLerror on input line 58.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 124.
+Class revtex4-1 Info: Overriding \@LN@LLerror on input line 57.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 123.
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 124.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 123.
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 124.
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 123.
 (c:/Users/jzemm/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
 \openout4 = `zemmels_hofmann_vanderplas.ent'.
 
 LaTeX Font Info:    Font shape `TU/lmss/bx/it' in size <10> not available
-(Font)              Font shape `TU/lmss/bx/sl' tried instead on input line 193.
+(Font)              Font shape `TU/lmss/bx/sl' tried instead on input line 194.
 File: figures/preProcessEffect.png Graphic file (type bmp)
 <figures/preProcessEffect.png>
 
-Overfull \hbox (9.0pt too wide) in paragraph at lines 217--217
+Overfull \hbox (9.0pt too wide) in paragraph at lines 218--218
  [][] 
  []
 
 [1]
 
-LaTeX Warning: A float is stuck (cannot be placed) on input line 239.
+LaTeX Warning: A float is stuck (cannot be placed) on input line 240.
 
 
-LaTeX Warning: A float is stuck (cannot be placed) on input line 239.
+LaTeX Warning: A float is stuck (cannot be placed) on input line 240.
 
 
 Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
@@ -628,7 +630,7 @@ Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
 File: figures/matchPair.png Graphic file (type bmp)
 <figures/matchPair.png>
 
-Overfull \hbox (9.0pt too wide) in paragraph at lines 366--366
+Overfull \hbox (9.0pt too wide) in paragraph at lines 367--367
  [][] 
  []
 
@@ -636,87 +638,76 @@ Overfull \hbox (9.0pt too wide) in paragraph at lines 366--366
 File: images/cellGridExample_nonMatch.png Graphic file (type bmp)
 <images/cellGridExample_nonMatch.png>
 
-Overfull \hbox (9.0pt too wide) in paragraph at lines 444--444
+Overfull \hbox (9.0pt too wide) in paragraph at lines 445--445
  [][] 
  []
 
-
-Underfull \hbox (badness 4366) in paragraph at lines 524--527
+[4]
+Underfull \hbox (badness 4366) in paragraph at lines 525--528
 []\TU/lmr/m/n/10 We compute two features, the \TU/lmr/bx/n/10 average \TU/lmr/m/n/10 and
  []
 
-[4]
 File: figures/dbscanScatterplot.png Graphic file (type bmp)
 <figures/dbscanScatterplot.png>
 
-Overfull \hbox (9.0pt too wide) in paragraph at lines 610--610
+Overfull \hbox (9.0pt too wide) in paragraph at lines 611--611
  [][] 
  []
 
 [5]
-Underfull \hbox (badness 4673) in paragraph at lines 653--658
+
+LaTeX Warning: A float is stuck (cannot be placed) on input line 630.
+
+
+LaTeX Warning: A float is stuck (cannot be placed) on input line 630.
+
+
+Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
+
+
+Underfull \hbox (badness 4673) in paragraph at lines 654--659
 []\TU/lmr/m/n/10 In summary, there are 10 total features, 6
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 662--663
+Underfull \hbox (badness 10000) in paragraph at lines 663--664
 []|\TU/lmr/m/n/9 Full-scan pairwise-complete
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 663--664
+Underfull \hbox (badness 10000) in paragraph at lines 664--665
 []|\TU/lmr/m/n/9 Average cell-based pairwise-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 670--671
+Underfull \hbox (badness 10000) in paragraph at lines 671--672
 []|\TU/lmr/m/n/9 Absolute sum of the density-
  []
 
 
-Overfull \hbox (5.5376pt too wide) in paragraph at lines 661--673
+Overfull \hbox (5.5376pt too wide) in paragraph at lines 662--674
  []$[]$ 
  []
 
 
-Underfull \hbox (badness 2269) in paragraph at lines 691--698
+Underfull \hbox (badness 2269) in paragraph at lines 692--699
 []\TU/lmr/m/n/10 We use 10-fold cross-validation repeated thrice
  []
 
-
-<<<<<<< HEAD
-Underfull \hbox (badness 3965) in paragraph at lines 723--726
-=======
-Underfull \hbox (badness 3965) in paragraph at lines 724--727
->>>>>>> e212ba87b767191950cc9b3480b9f8d800c0b08f
+[6]
+Underfull \hbox (badness 3965) in paragraph at lines 725--728
  []\TU/lmr/m/n/10 DBSCAN parameters $\OML/cmm/m/it/10 ^^O \OMS/cmsy/m/n/10 2 f\OT1/cmr/m/n/10 3\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 4\OML/cmm/m/it/10 ; :::; \OT1/cmr/m/n/10 15\OMS/cmsy/m/n/10 g$ \TU/lmr/m/n/10 and
  []
 
-[6]
 File: images/resultsPlots/rocPlot.png Graphic file (type bmp)
 <images/resultsPlots/rocPlot.png>
-<<<<<<< HEAD
 File: images/resultsPlots/classifResultsPlt_trainTest.png Graphic file (type bmp)
 <images/resultsPlots/classifResultsPlt_trainTest.png>
-
-LaTeX Warning: Reference `tab:registrationFeatures' on page 7 undefined on input line 849.
-
-=======
-
-LaTeX Warning: Reference `tab:registrationFeatures' on page 7 undefined on input line 816.
-
-File: images/resultsPlots/classifResultsPlt_trainTest.png Graphic file (type bmp)
-<images/resultsPlots/classifResultsPlt_trainTest.png>
->>>>>>> e212ba87b767191950cc9b3480b9f8d800c0b08f
 [7] [8]
 File: images/resultsPlots/testProbs_plt.png Graphic file (type bmp)
 <images/resultsPlots/testProbs_plt.png>
 
-<<<<<<< HEAD
-Overfull \hbox (9.0pt too wide) in paragraph at lines 898--899
-=======
 Overfull \hbox (9.0pt too wide) in paragraph at lines 892--893
->>>>>>> e212ba87b767191950cc9b3480b9f8d800c0b08f
  [][] 
  []
 
@@ -725,331 +716,70 @@ File: images/resultsPlots/misclassifPlt.png Graphic file (type bmp)
 File: images/resultsPlots/varImpPlt.png Graphic file (type bmp)
 <images/resultsPlots/varImpPlt.png>
 
-<<<<<<< HEAD
-Overfull \hbox (9.0pt too wide) in paragraph at lines 959--959
- [][] 
- []
-
-[9]
-Underfull \hbox (badness 10000) in paragraph at lines 988--988
-[]|\TU/lmr/m/n/9 Original
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--990
-[]|[][]\TU/lmr/m/n/9 Song[][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--990
-[]|\TU/lmr/m/n/9 Use [][]algo-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--990
-\TU/lmr/m/n/9 rithm 2[][][] to
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--990
-\TU/lmr/m/n/9 estimate
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--990
-\TU/lmr/m/n/9 cell-based
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--990
-[]|\TU/lmr/m/n/9 Call cells
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--990
-\TU/lmr/m/n/9 Congruent
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--990
-\TU/lmr/m/n/9 Matching
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--990
-\TU/lmr/m/n/9 registrations
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--990
-\TU/lmr/m/n/9 are close
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--990
-\TU/lmr/m/n/9 to a refer-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--990
-\TU/lmr/m/n/9 ence value.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--990
-\TU/lmr/m/n/9 Classify a
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--990
-\TU/lmr/m/n/9 pair as a
- []
-
-
-Underfull \hbox (badness 1281) in paragraph at lines 990--990
-\TU/lmr/m/n/9 match if the
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--991
-[]|\TU/lmr/m/n/9 Compute
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--991
-\TU/lmr/m/n/9 six summa-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--991
-\TU/lmr/m/n/9 tive features
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--991
-\TU/lmr/m/n/9 registrations.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 990--991
-\TU/lmr/m/n/9 Use features
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 992--992
-[]|[][]\TU/lmr/m/n/9 Zhang
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 992--992
-\TU/lmr/m/it/9 et al.[][]
- []
-
-
-Underfull \hbox (badness 6396) in paragraph at lines 992--992
-\TU/lmr/m/n/9 algorithm to
- []
-
-
-Underfull \hbox (badness 5548) in paragraph at lines 992--992
-\TU/lmr/m/n/9 identify cells
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 992--992
-\TU/lmr/m/n/9 that reach
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 992--992
-\TU/lmr/m/n/9 a consensus
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 992--992
-[]|\TU/lmr/m/n/9 Classify a
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 992--992
-\TU/lmr/m/n/9 cartridge
- []
-
-
-Underfull \hbox (badness 3078) in paragraph at lines 992--992
-\TU/lmr/m/n/9 case pair as
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 992--992
-\TU/lmr/m/n/9 a match if
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 992--992
-\TU/lmr/m/n/9 a DBSCAN
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 992--992
-\TU/lmr/m/n/9 cluster is
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 992--993
-\TU/lmr/m/n/9 tures based
- []
-
-
-Underfull \hbox (badness 2334) in paragraph at lines 992--993
-\TU/lmr/m/n/9 on DBSCAN
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 992--993
-\TU/lmr/m/n/9 clusters
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 992--993
-\TU/lmr/m/n/9 across both
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 992--993
-\TU/lmr/m/n/9 comparison
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 992--993
-\TU/lmr/m/n/9 directions.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 992--993
-\TU/lmr/m/n/9 Use features
- []
-
-
-Overfull \hbox (47.35315pt too wide) in paragraph at lines 1019--1026
- []$[]$ 
- []
-
-[10]
-
-LaTeX Warning: A float is stuck (cannot be placed) on input line 1044.
-
-
-LaTeX Warning: A float is stuck (cannot be placed) on input line 1044.
-=======
 Overfull \hbox (9.0pt too wide) in paragraph at lines 951--951
  [][] 
  []
 
-
-Underfull \hbox (badness 1270) in paragraph at lines 981--981
+[9] [10]
+Underfull \hbox (badness 1270) in paragraph at lines 1006--1006
 \TU/lmr/m/n/9 identify cells that reach a
  []
 
 
-Underfull \hbox (badness 4254) in paragraph at lines 981--982
+Underfull \hbox (badness 4254) in paragraph at lines 1006--1007
 \TU/lmr/m/n/9 tures based on DBSCAN
  []
 
-[9] [10]
 
-LaTeX Warning: A float is stuck (cannot be placed) on input line 1017.
-
-
-LaTeX Warning: A float is stuck (cannot be placed) on input line 1017.
->>>>>>> e212ba87b767191950cc9b3480b9f8d800c0b08f
-
-
-Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
-
-<<<<<<< HEAD
-[11]
-Underfull \hbox (badness 1354) in paragraph at lines 1100--1107
-=======
-
-Underfull \hbox (badness 1354) in paragraph at lines 1035--1042
->>>>>>> e212ba87b767191950cc9b3480b9f8d800c0b08f
+Underfull \hbox (badness 1354) in paragraph at lines 1091--1098
 []\TU/lmr/m/n/10 This work was partially funded by the Center
  []
 
 
-<<<<<<< HEAD
-Underfull \hbox (badness 6758) in paragraph at lines 1100--1107
-=======
-Underfull \hbox (badness 6758) in paragraph at lines 1035--1042
->>>>>>> e212ba87b767191950cc9b3480b9f8d800c0b08f
+Underfull \hbox (badness 6758) in paragraph at lines 1091--1098
 \TU/lmr/m/n/10 for Statistics and Applications in Forensic Evi-
  []
 
 
-<<<<<<< HEAD
-Underfull \hbox (badness 10000) in paragraph at lines 1100--1107
-=======
-Underfull \hbox (badness 10000) in paragraph at lines 1035--1042
->>>>>>> e212ba87b767191950cc9b3480b9f8d800c0b08f
+Underfull \hbox (badness 10000) in paragraph at lines 1091--1098
 \TU/lmr/m/n/10 dence (CSAFE) through Cooperative Agreement
  []
 
 
-<<<<<<< HEAD
-Underfull \hbox (badness 3724) in paragraph at lines 1100--1107
-=======
-Underfull \hbox (badness 3724) in paragraph at lines 1035--1042
->>>>>>> e212ba87b767191950cc9b3480b9f8d800c0b08f
+Underfull \hbox (badness 3724) in paragraph at lines 1091--1098
 \TU/lmr/m/n/10 Mellon University, Duke University, University of
  []
 
 
-<<<<<<< HEAD
-Underfull \hbox (badness 2057) in paragraph at lines 1100--1107
-=======
-Underfull \hbox (badness 2057) in paragraph at lines 1035--1042
->>>>>>> e212ba87b767191950cc9b3480b9f8d800c0b08f
+Underfull \hbox (badness 2057) in paragraph at lines 1091--1098
 \TU/lmr/m/n/10 University, University of Pennsylvania, Swarthmore
  []
 
 File: images/resultsPlots/featureDensity_registration.png Graphic file (type bmp)
 <images/resultsPlots/featureDensity_registration.png>
 
-<<<<<<< HEAD
-Overfull \hbox (9.0pt too wide) in paragraph at lines 1119--1119
-=======
-Overfull \hbox (9.0pt too wide) in paragraph at lines 1054--1054
->>>>>>> e212ba87b767191950cc9b3480b9f8d800c0b08f
+Overfull \hbox (9.0pt too wide) in paragraph at lines 1110--1110
  [][] 
  []
 
 File: images/resultsPlots/featureDensity_densityBased.png Graphic file (type bmp)
 <images/resultsPlots/featureDensity_densityBased.png>
 
-<<<<<<< HEAD
-Overfull \hbox (9.0pt too wide) in paragraph at lines 1123--1123
+Overfull \hbox (9.0pt too wide) in paragraph at lines 1114--1114
  [][] 
  []
 
-(./zemmels_hofmann_vanderplas.bbl (./zemmels_hofmann_vanderplas.ent [12])
-=======
-Overfull \hbox (9.0pt too wide) in paragraph at lines 1058--1058
- [][] 
- []
+[11] (./zemmels_hofmann_vanderplas.bbl (./zemmels_hofmann_vanderplas.ent [12]
 
-(./zemmels_hofmann_vanderplas.bbl (./zemmels_hofmann_vanderplas.ent [11]
-
-LaTeX Warning: A float is stuck (cannot be placed) on input line 2.
+LaTeX Warning: A float is stuck (cannot be placed) on input line 204.
 
 
-LaTeX Warning: A float is stuck (cannot be placed) on input line 2.
+LaTeX Warning: A float is stuck (cannot be placed) on input line 204.
 
 
 Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
 
 )
->>>>>>> e212ba87b767191950cc9b3480b9f8d800c0b08f
 Underfull \hbox (badness 3919) in paragraph at lines 36--37
  \TU/lmr/m/it/8 An Introduction to Statistical Learning: with Applica-
  []
@@ -1079,36 +809,19 @@ Underfull \hbox (badness 2521) in paragraph at lines 69--70
  \TU/lmr/m/n/8 J. F., Riley, M., Foreman, C. D., and Ballou, S. M.
  []
 
-<<<<<<< HEAD
 ) [13] (./zemmels_hofmann_vanderplas.aux)
-=======
-[12]) [13] (./zemmels_hofmann_vanderplas.aux)
->>>>>>> e212ba87b767191950cc9b3480b9f8d800c0b08f
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-29>
  ***********
-
-LaTeX Warning: There were undefined references.
-
  ) 
 Here is how much of TeX's memory you used:
-<<<<<<< HEAD
- 15438 strings out of 477590
- 247601 string characters out of 5817186
- 1963416 words of memory out of 5000000
- 36340 multiletter control sequences out of 15000+600000
+ 15440 strings out of 477590
+ 247670 string characters out of 5817186
+ 1969416 words of memory out of 5000000
+ 36342 multiletter control sequences out of 15000+600000
  571449 words of font info for 113 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  85i,19n,93p,937b,522s stack positions out of 10000i,1000n,20000p,200000b,200000s
-=======
- 15387 strings out of 477583
- 246648 string characters out of 5816311
- 1980416 words of memory out of 5000000
- 36295 multiletter control sequences out of 15000+600000
- 571449 words of font info for 113 fonts, out of 8000000 for 9000
- 14 hyphenation exceptions out of 8191
- 85i,19n,93p,937b,545s stack positions out of 10000i,1000n,20000p,200000b,200000s
->>>>>>> e212ba87b767191950cc9b3480b9f8d800c0b08f
 
 Output written on zemmels_hofmann_vanderplas.pdf (13 pages).
