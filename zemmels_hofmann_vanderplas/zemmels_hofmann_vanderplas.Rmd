@@ -96,8 +96,8 @@ In particular, examiners rely largely on their subjective findings rather than o
 
 In this paper, we introduce a procedure to automatically compare digital scans of cartridge cases.
 Throughout this paper, we use scans, taken by us **[scientific data citation]**, of cartridge cases collected by @Baldwin2014.
-The cartridge case scans are available as part of the data repository at **[doi here] [citation]**.
-We also provide code to reproduce the results shared in this paper at **[github link here]**.
+The cartridge case scans are available as part of the data repository at [https://www.doi.org/10.25380/IASTATE.23837100.V1](https://www.doi.org/10.25380/IASTATE.23837100.V1) [@cartridgeCaseData].
+We also provide code to reproduce the results shared in this paper at [https://github.com/jzemmels/rules_vs_scores](https://github.com/jzemmels/rules_vs_scores).
 
 ## Algorithmic Cartridge Case Comparisons
 

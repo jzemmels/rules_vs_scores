@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.20)  20 SEP 2023 18:29
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.20)  26 SEP 2023 16:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -686,78 +686,335 @@ Underfull \hbox (badness 2269) in paragraph at lines 690--697
  []
 
 
-Underfull \hbox (badness 3965) in paragraph at lines 722--725
+Underfull \hbox (badness 3965) in paragraph at lines 723--726
  []\TU/lmr/m/n/10 DBSCAN parameters $\OML/cmm/m/it/10 ^^O \OMS/cmsy/m/n/10 2 f\OT1/cmr/m/n/10 3\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 4\OML/cmm/m/it/10 ; :::; \OT1/cmr/m/n/10 15\OMS/cmsy/m/n/10 g$ \TU/lmr/m/n/10 and
  []
 
 [6]
-Underfull \hbox (badness 1354) in paragraph at lines 753--760
+File: images/resultsPlots/rocPlot.png Graphic file (type bmp)
+<images/resultsPlots/rocPlot.png>
+File: images/resultsPlots/classifResultsPlt_trainTest.png Graphic file (type bmp)
+<images/resultsPlots/classifResultsPlt_trainTest.png>
+
+LaTeX Warning: Reference `tab:registrationFeatures' on page 7 undefined on input line 849.
+
+[7] [8]
+File: images/resultsPlots/testProbs_plt.png Graphic file (type bmp)
+<images/resultsPlots/testProbs_plt.png>
+
+Overfull \hbox (9.0pt too wide) in paragraph at lines 898--899
+ [][] 
+ []
+
+File: images/resultsPlots/misclassifPlt.png Graphic file (type bmp)
+<images/resultsPlots/misclassifPlt.png>
+File: images/resultsPlots/varImpPlt.png Graphic file (type bmp)
+<images/resultsPlots/varImpPlt.png>
+
+Overfull \hbox (9.0pt too wide) in paragraph at lines 959--959
+ [][] 
+ []
+
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 988--988
+[]|\TU/lmr/m/n/9 Original
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--990
+[]|[][]\TU/lmr/m/n/9 Song[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--990
+[]|\TU/lmr/m/n/9 Use [][]algo-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--990
+\TU/lmr/m/n/9 rithm 2[][][] to
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--990
+\TU/lmr/m/n/9 estimate
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--990
+\TU/lmr/m/n/9 cell-based
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--990
+[]|\TU/lmr/m/n/9 Call cells
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--990
+\TU/lmr/m/n/9 Congruent
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--990
+\TU/lmr/m/n/9 Matching
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--990
+\TU/lmr/m/n/9 registrations
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--990
+\TU/lmr/m/n/9 are close
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--990
+\TU/lmr/m/n/9 to a refer-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--990
+\TU/lmr/m/n/9 ence value.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--990
+\TU/lmr/m/n/9 Classify a
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--990
+\TU/lmr/m/n/9 pair as a
+ []
+
+
+Underfull \hbox (badness 1281) in paragraph at lines 990--990
+\TU/lmr/m/n/9 match if the
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--991
+[]|\TU/lmr/m/n/9 Compute
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--991
+\TU/lmr/m/n/9 six summa-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--991
+\TU/lmr/m/n/9 tive features
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--991
+\TU/lmr/m/n/9 registrations.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--991
+\TU/lmr/m/n/9 Use features
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 992--992
+[]|[][]\TU/lmr/m/n/9 Zhang
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 992--992
+\TU/lmr/m/it/9 et al.[][]
+ []
+
+
+Underfull \hbox (badness 6396) in paragraph at lines 992--992
+\TU/lmr/m/n/9 algorithm to
+ []
+
+
+Underfull \hbox (badness 5548) in paragraph at lines 992--992
+\TU/lmr/m/n/9 identify cells
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 992--992
+\TU/lmr/m/n/9 that reach
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 992--992
+\TU/lmr/m/n/9 a consensus
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 992--992
+[]|\TU/lmr/m/n/9 Classify a
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 992--992
+\TU/lmr/m/n/9 cartridge
+ []
+
+
+Underfull \hbox (badness 3078) in paragraph at lines 992--992
+\TU/lmr/m/n/9 case pair as
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 992--992
+\TU/lmr/m/n/9 a match if
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 992--992
+\TU/lmr/m/n/9 a DBSCAN
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 992--992
+\TU/lmr/m/n/9 cluster is
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 992--993
+\TU/lmr/m/n/9 tures based
+ []
+
+
+Underfull \hbox (badness 2334) in paragraph at lines 992--993
+\TU/lmr/m/n/9 on DBSCAN
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 992--993
+\TU/lmr/m/n/9 clusters
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 992--993
+\TU/lmr/m/n/9 across both
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 992--993
+\TU/lmr/m/n/9 comparison
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 992--993
+\TU/lmr/m/n/9 directions.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 992--993
+\TU/lmr/m/n/9 Use features
+ []
+
+
+Overfull \hbox (47.35315pt too wide) in paragraph at lines 1019--1026
+ []$[]$ 
+ []
+
+[10]
+
+LaTeX Warning: A float is stuck (cannot be placed) on input line 1044.
+
+
+LaTeX Warning: A float is stuck (cannot be placed) on input line 1044.
+
+
+Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
+
+[11]
+Underfull \hbox (badness 1354) in paragraph at lines 1100--1107
 []\TU/lmr/m/n/10 This work was partially funded by the Center
  []
 
 
-Underfull \hbox (badness 6758) in paragraph at lines 753--760
+Underfull \hbox (badness 6758) in paragraph at lines 1100--1107
 \TU/lmr/m/n/10 for Statistics and Applications in Forensic Evi-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 753--760
+Underfull \hbox (badness 10000) in paragraph at lines 1100--1107
 \TU/lmr/m/n/10 dence (CSAFE) through Cooperative Agreement
  []
 
 
-Underfull \hbox (badness 3724) in paragraph at lines 753--760
+Underfull \hbox (badness 3724) in paragraph at lines 1100--1107
 \TU/lmr/m/n/10 Mellon University, Duke University, University of
  []
 
 
-Underfull \hbox (badness 2057) in paragraph at lines 753--760
+Underfull \hbox (badness 2057) in paragraph at lines 1100--1107
 \TU/lmr/m/n/10 University, University of Pennsylvania, Swarthmore
  []
 
-(./zemmels_hofmann_vanderplas.bbl (./zemmels_hofmann_vanderplas.ent)
-Underfull \hbox (badness 3919) in paragraph at lines 33--34
+File: images/resultsPlots/featureDensity_registration.png Graphic file (type bmp)
+<images/resultsPlots/featureDensity_registration.png>
+
+Overfull \hbox (9.0pt too wide) in paragraph at lines 1119--1119
+ [][] 
+ []
+
+File: images/resultsPlots/featureDensity_densityBased.png Graphic file (type bmp)
+<images/resultsPlots/featureDensity_densityBased.png>
+
+Overfull \hbox (9.0pt too wide) in paragraph at lines 1123--1123
+ [][] 
+ []
+
+(./zemmels_hofmann_vanderplas.bbl (./zemmels_hofmann_vanderplas.ent [12])
+Underfull \hbox (badness 3919) in paragraph at lines 36--37
  \TU/lmr/m/it/8 An Introduction to Statistical Learning: with Applica-
  []
 
 
-Underfull \hbox (badness 1102) in paragraph at lines 33--34
+Underfull \hbox (badness 1102) in paragraph at lines 36--37
  \TU/lmr/m/it/8 tions in R \TU/lmr/m/n/8 (Springer), [][]$[][][][][] [] [] [] [][][][][][][] [] [][][][][][][][] [] [][][] [] [][][] []
  []
 
 
-Underfull \hbox (badness 1881) in paragraph at lines 48--49
+Underfull \hbox (badness 1881) in paragraph at lines 51--52
  \TU/lmr/m/n/8 of feature-comparison methods,” [][]$[][][][][] [] [] [] [][][][][][][][][][][][][][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 48--49
+Underfull \hbox (badness 10000) in paragraph at lines 51--52
  [][][][][][][][] [] [][][] [] [][][][][] [] [][][][][][][] [] [][][][][] [] [][][][][][][][][][] [] [][][][] [] [][][][][] []
  []
 
-[7]
-Underfull \hbox (badness 1424) in paragraph at lines 66--67
+
+Underfull \hbox (badness 1424) in paragraph at lines 69--70
  \TU/lmr/m/n/8 Filliben, J. J., Ma, L., Rhee, H. G., Zheng, A., Song,
  []
 
 
-Underfull \hbox (badness 2521) in paragraph at lines 66--67
+Underfull \hbox (badness 2521) in paragraph at lines 69--70
  \TU/lmr/m/n/8 J. F., Riley, M., Foreman, C. D., and Ballou, S. M.
  []
 
-) [8] (./zemmels_hofmann_vanderplas.aux)
+) [13] (./zemmels_hofmann_vanderplas.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-29>
  ***********
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 15272 strings out of 477590
- 240797 string characters out of 5817186
- 1973416 words of memory out of 5000000
- 36184 multiletter control sequences out of 15000+600000
- 571441 words of font info for 112 fonts, out of 8000000 for 9000
+ 15438 strings out of 477590
+ 247601 string characters out of 5817186
+ 1963416 words of memory out of 5000000
+ 36340 multiletter control sequences out of 15000+600000
+ 571449 words of font info for 113 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 85i,19n,93p,820b,534s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 85i,19n,93p,937b,522s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on zemmels_hofmann_vanderplas.pdf (8 pages).
+Output written on zemmels_hofmann_vanderplas.pdf (13 pages).
