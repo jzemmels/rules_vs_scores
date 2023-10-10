@@ -879,15 +879,27 @@ We would like to thank the technicians and staff at the Roy J. Carver High Resol
 
 \section{Training Feature Distributions}
 
+In this section, we present visualizations of the distributions of the 9 similarity features summarized in \autoref{tab:allFeatures} for the 21,945 training comparisons.
+\autoref{fig:registrationDensities} depicts the densities for the 6 registration-based features distinguished by ground-truth.
+
 ```{r registrationDensities,echo=FALSE,out.width=".5\\textwidth",echo=FALSE,fig.pos="htbp",fig.cap = 'Density plots of the Registration-Based features for 21,945 cartridge case pairs. The standard deviation of the cell-based registrations distinguish between match and non-match pairs better than the mean values.'}
 knitr::include_graphics("images/resultsPlots/featureDensity_registration.png")
 ```
+
+Similarly, \autoref{fig:densityDistributions} shows the distributions of the 3 density-based features distinguished by ground truth.
+If the DBSCAN algorithm does not identify a cluster in both comparison directions for a particular pair, the Cluster Size $C$ and Estimated Translation Different $\Delta_{\text{trans}}$ features will be missing.
+In \autoref{fig:densityDistributions}, we see that missing $C$ and $\Delta_{\text{trans}}$ values are much more indicative of non-match comparisons than match comparisons, which we expect.
+When fitting models or making predictions, we impute missing $C$ values with 0 (i.e., no cluster found) and missing $\Delta_{\text{trans}}$ values with the overall median $\Delta_{\text{trans}}$ value in the training data.
 
 ```{r densityDistributions,out.width=".5\\textwidth",echo=FALSE,fig.pos="htbp",fig.cap = 'Distributions of the density-based features for 21,945 cartridge case pairs. The Cluster Size and Estimated Translation Difference features may be missing (\\texttt{NA}) if no DBSCAN cluster is identified, which commonly occurs for non-matching cartridge case pairs as evidenced by the stacked bar chart in the top left.'}
 knitr::include_graphics("images/resultsPlots/featureDensity_densityBased.png")
 ```
 
 \section{Model Results}
+
+In this section, we present numerical summaries of the four classifier models presented in the results section.
+\autoref{tab:trainDataResults} shows the training accuracy, true negative, and true positive rate for the four classifier models.
+Recall that we specifically targeted balancing the true negative and true positive rates when training the classifier models, which explains the relative closeness of these values.
 
 \begin{table}[htbp]
     \centering
@@ -903,6 +915,9 @@ knitr::include_graphics("images/resultsPlots/featureDensity_densityBased.png")
     \caption{Training accuracy, true positive, and true negative rates for the 4 binary classifiers. This table shows a numeric summary of the results shown in the Results section. We bold the largest values in each column for emphasis.}
     \label{tab:trainDataResults}
 \end{table}
+
+\autoref{tab:testDataResults} shows the test accuracy, true negative, and true positive rates for the four classifier models.
+We see that the random forest (RF) model has the highest test accuracy and true negative rates while the logistic regression (LR) model has the highest true positive rates.
 
 \begin{table}[htbp]
     \centering
@@ -923,5 +938,36 @@ knitr::include_graphics("images/resultsPlots/featureDensity_densityBased.png")
 
 This section will provide a more thorough definition of the classification criteria used in the Congruent Matching Cells algorithm as proposed in \citet{song_proposed_2013}.
 This section assumes that the reader is familiar with the notation and algorithms, \autoref{alg:registration} and \autoref{alg:cellComparison}, introduced in \ref{methods}.
+
+As in \ref{methods}, let $A$ and $B$ denote two pre-processed surface matrices of equal dimension.
+\citet{song_proposed_2013} doesn't indicate whether the CMC method is to be applied in both comparison directions, so for simplicity we only consider the direction $d = A$ in which $A$ is used as the source matrix and $B$ as the target.
+The first step of the CMC method is to apply \autoref{alg:cellComparison} using rotation grid $\Theta = \{-30^{\circ}, -27^{\circ},...,30^{\circ}\}$ and $R = C = 8$ grid size (some CMC papers use other grid sizes, but this choice of $\Theta_A$ and an $8 \times 8$ grid are a popular choice).
+This results in the set of cell-wise registrations and CCF values $\pmb{F}_A = \{(\theta, m_{A,t,\theta}^*, n_{A,t\theta}^*, CCF_{\max,A,t,\theta}) : \theta \in \Theta_A, t = 1,...,T_A\}$.
+
+Next, an estimated registration (rotation + translation) is determined for each cell that maximizes the CCF across $\Theta_A$:
+\begin{align*}
+\theta_{A,t}^* &= \arg \max_{\theta} \{CCF_{\max,A,t\theta} : \theta \in \Theta_A\} \\
+m_{A,t}^* &= m_{\theta_{A,t}^*,A,t} \\
+n_{A,t}^* &= n_{\theta_{A,t}^*,A,t}.
+\end{align*}
+
+A key assumption underlying the CMC method is that the estimated registrations $\{(\theta_{A,t}^*, m_{A,t}^*, n_{A,t}^*) : t = 1,...,T_A\}$ will come to a consensus on a particular registration if the two cartridge cases are truly matching.
+To determine whether there is a consensus, the CMC method proposed in \citet{song_proposed_2013} compares each cell's estimated registration to a reference registration.
+In \citet{song_proposed_2013}, this reference is defined to be the median registration across all cells whose $CCF_{\max,A,t,\theta_{A,t}^*}$ values are equal to or greater than some pre-defined threshold $T_{CCF}$.
+That is, consider the subset of cell-wise registrations $\pmb{F}^\dagger_A$ defined as:
+$$
+\pmb{F}^\dagger_A = \{(\theta_{A,t}^*, m_{A,t}^*, n_{A,t}^*,CCF_{\max,A,t,\theta_{A,t}^*}) : CCF_{\max,A,t,\theta_{A,t}^*} \geq T_{CCF}\}.
+$$
+The reference registration $(\theta_{ref}, m_{ref}, n_{ref})$ is defined as the element-wise median of the elements in $\pmb{F}_A^\dagger$.
+
+Next, the distance between the estimated registrations of each cell in $\pmb{F}_A^\dagger$ and the reference registration is compared to a set of thresholds $T_\theta, T_{m}, T_{n}$:
+
+- $|\theta_{A,t}^* - \theta_{ref}| \leq T_\theta$
+- $|m_{A,t}^* - m_{ref}| \leq T_m$
+- $|n_{A,t}^* - n_{ref}| \leq T_n$
+
+If a cell's registration satisfies these three criteria (and has a large enough $CCF_{\max}$ to be in $\pmb{F}_A^\dagger$), then it is called a Congruent Matching Cell.
+If any one of the criteria fail, then it is called a "non-CMC."
+The final similarity score is the total number of CMCs.
 
 \end{appendices}
