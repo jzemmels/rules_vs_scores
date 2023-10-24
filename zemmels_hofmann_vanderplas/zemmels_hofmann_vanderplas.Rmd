@@ -95,9 +95,10 @@ In particular, examiners rely largely on their subjective findings rather than o
 \citetalias{pcast2016} pushed for "developing and testing image-analysis algorithms" to objectively measure the similarity between cartridge cases.
 
 In this paper, we introduce a procedure to automatically compare digital scans of cartridge cases.
-Throughout this paper, we use scans, taken by us **[scientific data citation]**, of cartridge cases collected by @Baldwin2014.
+Throughout this paper, we use scans, taken by us [paper submitted to scientific data], of 510 cartridge cases collected by @Baldwin2014.
 The cartridge case scans are available as part of the data repository at [https://www.doi.org/10.25380/IASTATE.23837100.V1](https://www.doi.org/10.25380/IASTATE.23837100.V1) [@cartridgeCaseData].
-We also provide code to reproduce the results shared in this paper at [https://github.com/jzemmels/rules_vs_scores](https://github.com/jzemmels/rules_vs_scores).
+We split this data set up into training and testing sets of size 210 and 300 scans, respectively, to learn and validate model parameters.
+Code to reproduce the results shared in this paper are available at [https://github.com/jzemmels/rules_vs_scores](https://github.com/jzemmels/rules_vs_scores).
 
 ## Algorithmic Cartridge Case Comparisons
 
@@ -686,7 +687,7 @@ We optimize the models by performing a grid search across the following paramete
 
 - For the random forest, the "mtry" variable, which controls the number of candidate variables a decision tree has available at each split [@breiman], and
 
-- Match probability, $p \in [0,1]$
+- Match probability threshold, $p \in [0,1]$
 
 Once we have a trained model, we use it to predict the match probability and classify a new cartridge case pair.
 We use this match probability as a similarity score where larger values correspond with more similar cartridge cases.
@@ -795,17 +796,17 @@ knitr::include_graphics("images/resultsPlots/varImpPlt.png")
 
 ## Comparison to CMC Methodology
 
-We use Cluster Indicator classifier as a baseline because it is analogous to the classification rule proposed in @zhang_convergence_2021.
+We use the Cluster Indicator classifier as a baseline because it is analogous to the classification rule proposed in @zhang_convergence_2021.
 Similarly, the cell-based registration features are based on the the same cell-based comparison procedure used in @song_proposed_2013 and summarized in cell-based comparison.
 Together, we consider these classifiers as representing previously proposed cartridge case similarity scoring algorithms.
 \autoref{tab:previousWorkComparison} summarizes the similarities between our method and the algorithms proposed in @zhang_convergence_2021 and @song_proposed_2013.
 In our view, a defining characteristic of the previously proposed methods is they make classifications based on a set of binary decisions; for example, a cell is classified as a Congruent Matching Cell if its estimated registration is "close to" a reference value where "closeness" means being within some pre-defined, manually chosen threshold of the reference [@song_proposed_2013].
-The Cluster Indicator classifier used in @zhang_convergence_2021 uses the DBSCAN algorithm to compare cell registrations *to each other* rather than to a reference, but makes classifications based on the simple rule of whether a cluster is identified among the cell registrations.
-In contrast, our approach uses similar information to these previously proposed, "rule-based" methods, but in a more nuanced manner.
-We compute continuous summary statistics of the cell registrations rather than comparing them to a reference value as in the CMC method.
-We use the size of the DBSCAN clusters as a feature rather than simply considering whether a cluster exists as in the Cluster Indicator classifier.
-Our approach also combines the cell registration summaries and DBSCAN cluster features across both comparison directions, which protects against the rare, but not impossible, chance of a non-match pair that happens to appear similar in one, but not both, comparison directions.
-Finally, the procedure by which we fit a statistical classifier model using a training feature set has a number of benefits: (1) model parameters are automatically determined based on optimizing a set of criteria, (2) it's easier to understand the relationship between input features and the output score/classification by considering variable importance or weights, and (3) the continuous, model-based similarity score provides additional nuance than a discrete or binary similarity score.
+Although our approach uses similar information to these previously proposed methods, we utilize the features in a more nuanced manner.
+<!-- The Cluster Indicator classifier used in @zhang_convergence_2021 uses the DBSCAN algorithm to compare cell registrations *to each other* rather than to a reference, but makes classifications based on the simple rule of whether a cluster is identified among the cell registrations. -->
+<!-- We compute continuous summary statistics of the cell registrations rather than comparing them to a reference value as in the CMC method. -->
+<!-- We use the size of the DBSCAN clusters as a feature rather than simply considering whether a cluster exists as in the Cluster Indicator classifier. -->
+<!-- Our approach also combines the cell registration summaries and DBSCAN cluster features across both comparison directions, which protects against the rare, but not impossible, chance of a non-match pair that happens to appear similar in one, but not both, comparison directions. -->
+<!-- Finally, the procedure by which we fit a statistical classifier model using a training feature set has a number of benefits: (1) model parameters are automatically determined based on optimizing a set of criteria, (2) it's easier to understand the relationship between input features and the output score/classification by considering variable importance or weights, and (3) the continuous, model-based similarity score provides additional nuance than a discrete or binary similarity score. -->
 
 ```{=tex}
 \begin{table*}[htbp]
@@ -823,8 +824,27 @@ Original Paper & Similarities to ACES & Original Use & ACES Use \\
 ```
 
 
+The procedure by which we fit a statistical classifier model using a training feature set has a number of benefits: (1) model parameters are automatically determined based on optimizing a set of criteria, (2) it's easier to understand the relationship between input features and the output score/classification by considering variable importance or weights, and (3) the continuous, model-based similarity score provides additional nuance than a discrete or binary similarity score.
+As an illustrative example, consider the relationship between the average cell-based pairwise-complete correlation feature, $\overline{cor}_{\text{cell}}$, and an estimated match probability based on the fitted logistic regression model.
+\autoref{fig:cor_prob_logistic} shows a scatterplot of these two values for the training comparisons used in this paper.
+Each point represents a single comparison
+The solid curve in the figure represents the marginal effects of $\overline{cor}_{\text{cell}}$ on the estimated probability.
+The dashed line shows a decision boundary where comparisons with an associated $\overline{cor}_{\text{cell}}$ value above $0.4$ are classified as a match and as a non-match otherwise, which represents a rule-based classifier.
 
-**Comparison to decision tree model**
+We see that many comparisons are misclassified based on this decision boundary, which we visualize as "x"s as opposed to the correctly-classified "o"s.
+Even if this decision boundary were one of a set of classification rules, as is the case with the CMC method, there is no qualification as to how close a comparison's $\overline{cor}_{\text{cell}}$ value is to the decision boundary; for example, a comparison with a $\overline{cor}_{\text{cell}}$ value of $0.39$ is treated the same as one with a value of $0.28$.
+\autoref{fig:cmc_decision_tree} depicts a tree diagram illustrating the rigidity of the four binary rules used in the CMC method to call a cell a "CMC" or "non-CMC."
+
+Comparatively, the marginal effects curve demonstrates additional nuance by mapping larger $\overline{cor}_{\text{cell}}$ values to larger match probabilities.
+Further, even if a comparison doesn't have a $\overline{cor}_{\text{cell}}$ value typical of its ground-truth, such as a match comparison with a low $\overline{cor}_{\text{cell}}$ value, it may have exhibit other features representative of its ground-truth, which the logistic regression model would account for.
+
+```{r,echo=FALSE,fig.env="figure",fig.align='center',fig.cap='\\label{fig:cmc_decision_tree} A tree diagram showing the Congruent Matching Cells approach to classifying a cell as a "CMC" or "Non-CMC." If any one of the four criteria is not satisfied, then a cell is classified as a "Non-CMC."',fig.pos="htbp",out.width=".5\\textwidth"}
+knitr::include_graphics("images/cmc-decision-tree.png")
+```
+
+```{r,echo=FALSE,fig.env="figure*",fig.align='center',fig.cap='\\label{fig:cor_prob_logistic} A scatterplot between the average cell-based pairwise-complete correlation feature, $\\overline{cor}_{\\text{cell}}$, and the estimated logistic regression-estimated match probability for the training comparisons. The fitted curve shows the marginal effect of $\\overline{cor}_{\\text{cell}}$ on the match probability. ',fig.pos="htbp",out.width="\\textwidth"}
+knitr::include_graphics("images/resultsPlots/cor_prob_logistic.png")
+```
 
 
 ## Model Selection Considerations
@@ -963,7 +983,9 @@ The reference registration $(\theta_{ref}, m_{ref}, n_{ref})$ is defined as the 
 Next, the distance between the estimated registrations of each cell in $\pmb{F}_A^\dagger$ and the reference registration is compared to a set of thresholds $T_\theta, T_{m}, T_{n}$:
 
 - $|\theta_{A,t}^* - \theta_{ref}| \leq T_\theta$
+
 - $|m_{A,t}^* - m_{ref}| \leq T_m$
+
 - $|n_{A,t}^* - n_{ref}| \leq T_n$
 
 If a cell's registration satisfies these three criteria (and has a large enough $CCF_{\max}$ to be in $\pmb{F}_A^\dagger$), then it is called a Congruent Matching Cell.
