@@ -167,6 +167,85 @@ knitr::plot_crop("figures/preProcessEffect.png")
 knitr::include_graphics("figures/preProcessEffect.png")
 ```
 
+```{r preprocessScans,include=FALSE,cache=TRUE}
+target <- x3p_read("data/NIST_K013sA2.x3p") %>%
+  x3p_scale_unit(scale_by = 1e6)
+
+target_eroded <- target %>%
+  impressions::x3p_delete(mask_vals = "#CD7F32FF") %>%
+  cmcR::preProcess_removeTrend(statistic = "quantile",
+                               tau = .5,
+                               method = "fn") %>%
+  cmcR::preProcess_gaussFilter() %>%
+  x3p_sample() %>%
+  cmcR::preProcess_removeTrend(statistic = "quantile",
+                               tau = .5,
+                               method = "fn") %>%
+  cmcR::preProcess_gaussFilter() %>%
+  x3p_sample() %>%
+  cmcR::preProcess_erode(region = "interior",morphRadius = round(50/4)) %>% 
+  cmcR::preProcess_erode(region = "exterior",morphRadius =  round(50/4)) %>%
+  impressions::x3p_cropWS()
+```
+
+```{r,include=FALSE}
+if(!file.exists("data/compData.rds")){
+  fullScanComparison <-
+    scored::comparison_fullScan(reference_eroded,target_eroded,
+                                thetas = seq(-30,30,by = 3),
+                                returnX3Ps = TRUE) %>%
+    group_by(direction) %>%
+    filter(fft_ccf == max(fft_ccf)) %>%
+    ungroup()
+  
+  cellComparison <-
+    bind_rows(
+      scored::comparison_cellBased(fullScanComparison$cellHeightValues[[1]],
+                                   fullScanComparison$alignedTargetCell[[1]],
+                                   thetas = -2:2,
+                                   direction = "one",
+                                   numCells = c(4,4),
+                                   maxMissingProp = .99,
+                                   sideLengthMultiplier = 1.1,
+                                   returnX3Ps = FALSE) %>%
+        mutate(direction = "reference_vs_target"),
+      scored::comparison_cellBased(fullScanComparison$cellHeightValues[[2]],
+                                   fullScanComparison$alignedTargetCell[[2]],
+                                   thetas = -2:2,
+                                   direction = "one",
+                                   numCells = c(4,4),
+                                   maxMissingProp = .99,
+                                   sideLengthMultiplier = 1.1,
+                                   returnX3Ps = FALSE) %>%
+        mutate(direction = "target_vs_reference")
+    )
+  
+  saveRDS(cellComparison,file = "data/compData.rds")
+}
+
+if(!file.exists("data/compData_8x8.rds")){
+  cellComparison_8x8 <-
+    scored::comparison_cellBased(fullScanComparison$cellHeightValues[[1]],
+                                 fullScanComparison$alignedTargetCell[[1]],
+                                 thetas = -2:2,
+                                 direction = "one",
+                                 numCells = c(8,8),
+                                 maxMissingProp = .99,
+                                 sideLengthMultiplier = 1.1,
+                                 returnX3Ps = TRUE) %>%
+    mutate(direction = "reference_vs_target",
+           cmcClassif = cmcR::decision_CMC(cellIndex,x,y,theta,pairwiseCompCor))
+  
+  saveRDS(cellComparison_8x8,file = "data/compData_8x8.rds") 
+}
+```
+
+```{r,include=FALSE}
+compData <- readRDS("data/compData.rds")
+compData_8x8 <- readRDS("data/compData_8x8.rds")
+```
+
+
 Two pre-processed cartridge cases are compared to measure the similarity of their breech face impressions.
 In the next section, we summarize a technique for comparing cartridge case scans called the *Congruent Matching Cells* algorithm [@song_proposed_2013]. 
 
@@ -184,7 +263,48 @@ Instead, @song_proposed_2013 proposed partitioning one cartridge case scan into 
 If two cartridge cases are truly matching, then the maximum CCF value between each cell and the other scan, particularly the cells containing distinguishable breech face impressions, should be relatively large.
 
 Furthermore, the cells should "agree" on the registration at which the CCF is maximized.
-**[Visually, this corresponds to xyz --- borrow figure from scientific data paper]**
+Numerically, two cells "agree" on a registration when their estimated rotation and translation are equal (although we typically allow a small amount of variability).
+Visually, we can identify cells in agreement by whether they retain their shared spatial relationship after registering in the other scan.
+\autoref{fig:cellregistrations} shows an example of estimated cell registrations between two same-source cartridge cases.
+In this example, Scan A is partitioned into an $8 \times 8$ grid of cells, identified with "row #, column #" labels, each of which are registered in Scan B.
+We see that many cells retain their spatial relationship after registration; for example, cell 2, 1 is directly above cell 3, 1 and to the left of cell 2, 2 - all three of these cells agree (approximately) on the same registration.
+Comparatively, cells 8, 2 and 8, 3, which should be side-by-side in both scans, clearly do not agree on the same registration in Scan B.
+The more cells that agree on a registration, the stronger the evidence that the two cartridge cases are truly same-source.
+
+```{r,include=FALSE}
+cmcClassif_8x8 <- compData_8x8 %>%
+  filter(cmcClassif == "CMC")
+
+cmcClassif_8x8 <- 
+  bind_rows(cmcClassif_8x8,
+            compData_8x8 %>%
+              filter(!(cellIndex %in% cmcClassif_8x8$cellIndex)) %>%
+              group_by(cellIndex) %>%
+              filter(fft_ccf == max(fft_ccf)) %>%
+              ungroup())
+
+plt <-
+  cmcR::cmcPlot(reference_eroded,target_eroded,
+                cmcClassifs = cmcClassif_8x8 %>% mutate(cmcClassif = "CMC"),
+                cmcCol = "cmcClassif",type = "list")
+
+cmcplot <- (plt$reference + 
+              theme(strip.text = element_blank(),
+                    plot.subtitle = element_text(hjust = .5,size = 10)) + 
+              labs(subtitle = "Scan A")) | 
+  (plt$target + 
+     theme(strip.text = element_blank(),
+           plot.subtitle = element_text(hjust = .5,size = 10)) + 
+     labs(subtitle = "Scan B"))
+
+ggsave(cmcplot,filename = "figures/cellregistrations.png",height = 5,width = 10,bg = "white")
+knitr::plot_crop("figures/cellregistrations.png")
+```
+
+```{r,out.width=".5\\textwidth",fig.env="figure",echo=FALSE,fig.pos="htbp",fig.cap="\\label{fig:cellregistrations} A visualization of estimated cell registrations between two same-source cartridge cases. Scan A is partitioned into an $8 \\times 8$ grid of cells, each of which are registered in Scan B. For two same-source cartridge cases, we expect cells to agree on the same registration, meaning they retain their shared spatial relationship in both scans."}
+knitr::include_graphics("figures/cellregistrations.png")
+```
+
 @song_proposed_2013 outlined the "Congruent Matching Cells" algorithm to determine the number of cells that agree on a particular registration.
 A cell is classified as a Congruent Matching Cell (CMC) if its estimated registration is within some threshold of the median registration across all cells and its CCF value is above some threshold (see \ref{appendixCMC} for more details).
 A number of follow-up papers proposed alterations to the the original CMC method [@tong_improved_2015; @chen_convergence_2017].
@@ -261,28 +381,6 @@ Calculate rotation $\theta^* = \arg \max_{\theta} \{CCF_{\max,\theta} : \theta \
 \Return{Estimated rotation $\theta^*$, translation $m^* = m^*_{\theta^*}$ and $n^* = n^*_{\theta^*}$, and $CCF_{\max}$}
 \end{algorithm}
 ```
-
-```{r preprocessScans,include=FALSE,cache=TRUE}
-target <- x3p_read("data/NIST_K013sA2.x3p") %>%
-  x3p_scale_unit(scale_by = 1e6)
-
-target_eroded <- target %>%
-  impressions::x3p_delete(mask_vals = "#CD7F32FF") %>%
-  cmcR::preProcess_removeTrend(statistic = "quantile",
-                               tau = .5,
-                               method = "fn") %>%
-  cmcR::preProcess_gaussFilter() %>%
-  x3p_sample() %>%
-  cmcR::preProcess_removeTrend(statistic = "quantile",
-                               tau = .5,
-                               method = "fn") %>%
-  cmcR::preProcess_gaussFilter() %>%
-  x3p_sample() %>%
-  cmcR::preProcess_erode(region = "interior",morphRadius = round(50/4)) %>% 
-  cmcR::preProcess_erode(region = "exterior",morphRadius =  round(50/4)) %>%
-  impressions::x3p_cropWS()
-```
-
 
 ```{r,cache=FALSE,include=FALSE}
 plt <- impressions::x3pPlot(reference_eroded,target_eroded,x3p.names = c("Scan A","Scan B"),legend.length = grid::unit(4, "in"))
@@ -441,43 +539,6 @@ This indicates that about half of the cells in the $4 \times 4$ grid agree on a 
 Additionally, the mean cluster centers are approximately close to 0: $(\hat{m}_A,\hat{n}_A,\hat{\theta}_A) \approx (0.29, 0.57, 0^\circ)$ when $A$ is used as source compared to $(\hat{m}_B,\hat{n}_B,\hat{\theta}_B) \approx (-0.67, 0.00, 0^\circ)$ when $B^*$ is used as source.
 If $A$ and $B$ were truly matching and the full scan registration from \autoref{alg:registration} successfully aligned the two scans, then we wouldn't expect the cells to move much in their respective registrations, which is illustrated in this example.
 For non-matching scans, we wouldn't expect the cell registrations to agree only by coincidence.
-
-```{r,include=FALSE}
-fullScanComparison <-
-  scored::comparison_fullScan(reference_eroded,target_eroded,
-                              thetas = seq(-30,30,by = 3),
-                              returnX3Ps = TRUE) %>%
-  group_by(direction) %>%
-  filter(fft_ccf == max(fft_ccf)) %>%
-  ungroup()
-
-cellComparison <-
-  bind_rows(
-    scored::comparison_cellBased(fullScanComparison$cellHeightValues[[1]],
-                                         fullScanComparison$alignedTargetCell[[1]],
-                                         thetas = -2:2,
-                                         direction = "one",
-                                         numCells = c(4,4),
-                                         maxMissingProp = .99,
-                                         sideLengthMultiplier = 1.1,
-                                         returnX3Ps = FALSE) %>%
-      mutate(direction = "reference_vs_target"),
-    scored::comparison_cellBased(fullScanComparison$cellHeightValues[[2]],
-                                         fullScanComparison$alignedTargetCell[[2]],
-                                         thetas = -2:2,
-                                         direction = "one",
-                                         numCells = c(4,4),
-                                         maxMissingProp = .99,
-                                         sideLengthMultiplier = 1.1,
-                                         returnX3Ps = FALSE) %>%
-      mutate(direction = "target_vs_reference")
-  )
-
-saveRDS(cellComparison,file = "data/compData.rds")
-
-compData <- readRDS("data/compData.rds")
-```
-
 
 ```{r,cache=FALSE,include=FALSE}
 estimRotations <- compData %>%
@@ -825,24 +886,31 @@ Original Paper & Similarities to ACES & Original Use & ACES Use \\
 
 
 The procedure by which we fit a statistical classifier model using a training feature set has a number of benefits: (1) model parameters are automatically determined based on optimizing a set of criteria, (2) it's easier to understand the relationship between input features and the output score/classification by considering variable importance or weights, and (3) the continuous, model-based similarity score provides additional nuance than a discrete or binary similarity score.
-As an illustrative example, consider the relationship between the average cell-based pairwise-complete correlation feature, $\overline{cor}_{\text{cell}}$, and an estimated match probability based on the fitted logistic regression model.
-\autoref{fig:cor_prob_logistic} shows a scatterplot of these two values for the training comparisons used in this paper.
-Each point represents a single comparison
-The solid curve in the figure represents the marginal effects of $\overline{cor}_{\text{cell}}$ on the estimated probability.
+As an illustrative example, consider the relationship between the average cell-based pairwise-complete correlation feature, $\overline{cor}_{\text{cell}}$, and the estimated similarity score based on the full logistic regression model.
+\autoref{fig:cor_prob_logistic} shows a scatterplot of these two values where each point represents one of the 21,945 training comparisons used in this paper.
 The dashed line shows a decision boundary where comparisons with an associated $\overline{cor}_{\text{cell}}$ value above $0.4$ are classified as a match and as a non-match otherwise, which represents a rule-based classifier.
+The dotted curve represents a logistic regression of ground-truth on only the $\overline{cor}_{\text{cell}}$ feature.
+The the vertical position of each point represents the estimated similarity score based on the full logistic regression model using all 9 features summarized in \autoref{tab:allFeatures}.
 
-We see that many comparisons are misclassified based on this decision boundary, which we visualize as "x"s as opposed to the correctly-classified "o"s.
+We see that many comparisons are misclassified based on this decision boundary, which are shown as falling on the wrong side of the vertical line.
 Even if this decision boundary were one of a set of classification rules, as is the case with the CMC method, there is no qualification as to how close a comparison's $\overline{cor}_{\text{cell}}$ value is to the decision boundary; for example, a comparison with a $\overline{cor}_{\text{cell}}$ value of $0.39$ is treated the same as one with a value of $0.28$.
 \autoref{fig:cmc_decision_tree} depicts a tree diagram illustrating the rigidity of the four binary rules used in the CMC method to call a cell a "CMC" or "non-CMC."
-
-Comparatively, the marginal effects curve demonstrates additional nuance by mapping larger $\overline{cor}_{\text{cell}}$ values to larger match probabilities.
-Further, even if a comparison doesn't have a $\overline{cor}_{\text{cell}}$ value typical of its ground-truth, such as a match comparison with a low $\overline{cor}_{\text{cell}}$ value, it may have exhibit other features representative of its ground-truth, which the logistic regression model would account for.
+Comparatively, the dotted logistic regression curve demonstrates additional nuance by mapping larger $\overline{cor}_{\text{cell}}$ values to larger similarity scores.
+ 
+The true benefit of using a statistical model is clear when we consider the 8 other features used in the full logistic regression model.
+We represent the estimated similarity scores from this full model along the vertical axis of \autoref{fig:cor_prob_logistic}.
+Considering the extremes of the horizontal axis, all three of these classification methods more or less treat comparisons with low $\overline{cor}_{\text{cell}}$ values as non-matches and comparisons with high $\overline{cor}_{\text{cell}}$ values as matches.
+The benefit of considering other features can be seen for comparisons with middling $\overline{cor}_{\text{cell}}$ values, between $0.3$ and $0.55$, say.
+Despite many match comparisons having $\overline{cor}_{\text{cell}}$ values less than $0.4$, their full model similarity scores are quite high.
+Conversely, many non-match comparisons with $\overline{cor}_{\text{cell}}$ values greater than $0.4$ have low similarity scores.
+Even if a comparison doesn't have a $\overline{cor}_{\text{cell}}$ value typical of its ground-truth, such as a match comparison with a low $\overline{cor}_{\text{cell}}$ value, it may have exhibit other features representative of its ground-truth.
+Unlike the decision boundary or univariate logistic curve, the full model logistic regression model is more adept at identifying the ground-truth of these comparisons.
 
 ```{r,echo=FALSE,fig.env="figure",fig.align='center',fig.cap='\\label{fig:cmc_decision_tree} A tree diagram showing the Congruent Matching Cells approach to classifying a cell as a "CMC" or "Non-CMC." If any one of the four criteria is not satisfied, then a cell is classified as a "Non-CMC."',fig.pos="htbp",out.width=".5\\textwidth"}
 knitr::include_graphics("images/cmc-decision-tree.png")
 ```
 
-```{r,echo=FALSE,fig.env="figure*",fig.align='center',fig.cap='\\label{fig:cor_prob_logistic} A scatterplot between the average cell-based pairwise-complete correlation feature, $\\overline{cor}_{\\text{cell}}$, and the estimated logistic regression-estimated match probability for the training comparisons. The fitted curve shows the marginal effect of $\\overline{cor}_{\\text{cell}}$ on the match probability. ',fig.pos="htbp",out.width="\\textwidth"}
+```{r,echo=FALSE,fig.env="figure*",fig.align='center',fig.cap='\\label{fig:cor_prob_logistic} A scatterplot between the average cell-based pairwise-complete correlation feature, $\\overline{cor}_{\\text{cell}}$, and the estimated logistic regression-estimated match probability for the training comparisons. The vertical line represents a classification rule at $\\overline{cor}_{\\text{cell}} = 0.4$ above which comparisons are classified as matches. The curve represents a logistic regression of ground-truth on only the $\\overline{cor}_{\\text{cell}}$ feature. As we move from the classification rule to univariate logistic regression to the full model similarity scores, we see that the use of a statistical model with one or more features allows us to discriminate better between match and non-match comparisons.',fig.pos="htbp",out.width="\\textwidth"}
 knitr::include_graphics("images/resultsPlots/cor_prob_logistic.png")
 ```
 
@@ -922,36 +990,36 @@ In this section, we present numerical summaries of the four classifier models pr
 Recall that we specifically targeted balancing the true negative and true positive rates when training the classifier models, which explains the relative closeness of these values.
 
 \begin{table}[htbp]
-    \centering
-    \begin{tabular}{l|r|r|r}
-         \textbf{Classifier} & \textbf{Accuracy} & \textbf{True Negative} & \textbf{True Positive} \\
-         \hline
-         Cluster Ind. & 90.5\% & 90.4\% & 90.7\% \\
-         CMC & 88.6\% & 89.0\% & 86.9\% \\
-         \hline
-         LR & 97.5\% & 97.5\% & 97.5\% \\
-         RF & \textbf{99.6\%} & \textbf{99.6\%} & \textbf{99.6\%}
-    \end{tabular}
-    \caption{Training accuracy, true positive, and true negative rates for the 4 binary classifiers. This table shows a numeric summary of the results shown in the Results section. We bold the largest values in each column for emphasis.}
-    \label{tab:trainDataResults}
+\centering
+\begin{tabular}{l|r|r|r}
+\textbf{Classifier} & \textbf{Accuracy} & \textbf{True Negative} & \textbf{True Positive} \\
+\hline
+Cluster Ind. & 90.5\% & 90.4\% & 90.7\% \\
+CMC & 88.6\% & 89.0\% & 86.9\% \\
+\hline
+LR & 97.5\% & 97.5\% & 97.5\% \\
+RF & \textbf{99.6\%} & \textbf{99.6\%} & \textbf{99.6\%}
+\end{tabular}
+\caption{Training accuracy, true positive, and true negative rates for the 4 binary classifiers. This table shows a numeric summary of the results shown in the Results section. We bold the largest values in each column for emphasis.}
+\label{tab:trainDataResults}
 \end{table}
 
 \autoref{tab:testDataResults} shows the test accuracy, true negative, and true positive rates for the four classifier models.
 We see that the random forest (RF) model has the highest test accuracy and true negative rates while the logistic regression (LR) model has the highest true positive rates.
 
 \begin{table}[htbp]
-    \centering
-    \begin{tabular}{l|r|r|r}
-         \textbf{Classifier} & \textbf{Accuracy} & \textbf{True Negative} & \textbf{True Positive} \\
-         \hline
-         Cluster Ind. & 89.4\% & 89.6\% & 86.8\% \\
-         CMC & 96.9\% & 98.8\% & 71.0\% \\
-         \hline
-         LR & 97.3\% & 97.5\% & \textbf{94.4\%} \\
-         RF & \textbf{98.9\%} & \textbf{99.3\%} & 92.2\%
-    \end{tabular}
-    \caption{Test accuracy, true positive, and true negative rates for the 4 binary classifiers. This table shows a numeric summary of the results shown in the Results section. We bold the largest values in each column for emphasis.}
-    \label{tab:testDataResults}
+\centering
+\begin{tabular}{l|r|r|r}
+\textbf{Classifier} & \textbf{Accuracy} & \textbf{True Negative} & \textbf{True Positive} \\
+\hline
+Cluster Ind. & 89.4\% & 89.6\% & 86.8\% \\
+CMC & 96.9\% & 98.8\% & 71.0\% \\
+\hline
+LR & 97.3\% & 97.5\% & \textbf{94.4\%} \\
+RF & \textbf{98.9\%} & \textbf{99.3\%} & 92.2\%
+\end{tabular}
+\caption{Test accuracy, true positive, and true negative rates for the 4 binary classifiers. This table shows a numeric summary of the results shown in the Results section. We bold the largest values in each column for emphasis.}
+\label{tab:testDataResults}
 \end{table}
 
 \section{Congruent Matching Cells Algorithm Criteria} \label{appendixCMC}
